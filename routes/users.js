@@ -30,4 +30,27 @@ router.post("/add-user", async (req, res) => {
   }
 });
 
+// Route to delete a user
+router.delete("/delete-user/:userId", async (req, res) => {
+  try {
+    // Extract user ID from the request parameters
+    const userId = req.params.userId;
+
+    // Use Mongoose's findByIdAndDelete to delete the user by ID
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (deletedUser) {
+      // Respond with a success message
+      res.status(200).json({ message: "User deleted successfully" });
+    } else {
+      // Respond with a not found message if user not found
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
