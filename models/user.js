@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "regular"],
     default: "regular",
   },
-  class: {
+  group: {
     type: String,
     unique: false,
     required: true,
