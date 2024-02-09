@@ -53,4 +53,18 @@ router.delete("/delete-user/:userId", async (req, res) => {
   }
 });
 
+// Route to get all users
+router.get("/get-users", async (req, res) => {
+  try {
+    // Fetch all users from the database
+    const users = await User.find();
+
+    // Respond with the list of users
+    res.status(200).json(users);
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;
