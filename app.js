@@ -26,7 +26,7 @@ const itemsRoutes = require("./routes/items");
 const usersRoutes = require("./routes/users");
 
 // Use routes
-app.use("/items", itemsRoutes);
+//app.use("/items", itemsRoutes);
 app.use("/users", usersRoutes);
 
 // Start the server
