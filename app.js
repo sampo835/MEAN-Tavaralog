@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const config = require("./config/database");
+const itemsRoutes = require("./routes/items");
+const usersRoutes = require("./routes/users");
 
 const app = express();
 
@@ -20,10 +22,6 @@ mongoose.connection.on("error", (err) => {
 
 // Middleware
 app.use(bodyParser.json());
-
-// Import routes
-const itemsRoutes = require("./routes/items");
-const usersRoutes = require("./routes/users");
 
 // Use routes
 app.use("/items", itemsRoutes);
