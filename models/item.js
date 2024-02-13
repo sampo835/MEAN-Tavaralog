@@ -16,6 +16,10 @@ const itemSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  location: {
+    type: String,
+    default: "stock",
+  },
   rfidTag: {
     type: String,
     unique: true,
