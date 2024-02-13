@@ -68,4 +68,31 @@ router.get("/get-users", async (req, res) => {
   }
 });
 
+// Route to check if a user with a specific RFID tag is an admin
+router.get("/check-admin/:rfidTag", async (req, res) => {
+  try {
+    // Extract RFID tag from the request parameters
+    const rfidTag = req.params.rfidTag;
+
+    // Use Mongoose's findOne to find the user by RFID tag
+    const user = await User.findOne({ rfidTag });
+
+    if (user) {
+      // Check if the user has an admin role
+      if (user.role === 'admin') {
+        res.status(200).json({ isAdmin: true });
+      } else {
+        res.status(200).json({ isAdmin: false });
+      }
+    } else {
+      // Respond with a not found message if user not found
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
