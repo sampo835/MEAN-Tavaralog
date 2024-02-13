@@ -1,4 +1,3 @@
-/* Routes for items */
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/item");
@@ -58,6 +57,68 @@ router.get("/get-items", async (req, res) => {
   } catch (error) {
     console.error("Error fetching items:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Route to loan an item
+router.put("/loan/:itemId", async (req, res) => {
+  const itemId = req.params.itemId;
+
+  try {
+    // Find the item by ID
+    const item = await Item.findById(itemId);
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    // Check if the item is already loaned
+    if (item.isLoaned) {
+      return res.status(400).json({ message: "Item is already loaned" });
+    }
+
+    // Update the item's loan status
+    item.isLoaned = true;
+
+    // Save the updated item
+    await item.save();
+
+    res.status(200).json({ message: "Item loaned successfully", item });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Route to return a loaned item
+router.put("/return/:itemId", async (req, res) => {
+  const itemId = req.params.itemId;
+
+  try {
+    // Find the item by ID
+    const item = await Item.findById(itemId);
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    // Check if the item is not loaned
+    if (!item.isLoaned) {
+      return res.status(400).json({ message: "Item is not loaned" });
+    }
+
+    // Update the item's loan status
+    item.isLoaned = false;
+
+    // Save the updated item
+    const updatedItem = await item.save();
+
+    res
+      .status(200)
+      .json({ message: "Item returned successfully", item: updatedItem });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
