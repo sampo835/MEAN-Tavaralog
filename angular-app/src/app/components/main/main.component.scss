@@ -1,6 +1,6 @@
-* {
+/** {
   border: 1px #131313 solid;
-}
+}*/
 
 .container {
   margin: auto;
@@ -31,6 +31,13 @@
       border-radius: 10px;
       border: 2px #fff solid;
       background-color: #0048ff;
+      transition: all 0.5s ease-in-out;
+
+      &:hover {
+        height: 180px;
+        width: 460px;
+        background-color: #0034b9;
+      }
     }
 
     .loan {
