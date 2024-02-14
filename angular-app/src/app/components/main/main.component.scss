@@ -1,0 +1,90 @@
+/** {
+  border: 1px #131313 solid;
+}
+
+.container {
+  margin: auto;
+  height: 98vh;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  display: grid;
+  grid-template-areas: "li loli";
+
+  .links {
+    grid-area: li;
+    grid-template-areas:
+      "lo"
+      "re"
+      "ma";
+    grid-gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    height: 600px;
+    width: 600px;
+
+    .loan {
+      height: 100px;
+      grid-area: lo;
+    }
+
+    .return {
+      height: 100px;
+      grid-area: re;
+    }
+
+    .management {
+      height: 100px;
+      grid-area: ma;
+    }
+  }
+
+  .loan-list {
+    grid-area: loli;
+    padding: 30px;
+    width: 600px;
+    height: 600px;
+  }
+}*/
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 100% of viewport height */
+  margin: 0;
+  padding: 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50%;
+}
+
+.button {
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+}
+
+.loaned-items-container {
+  height: 50%;
+  background-color: #ecf0f1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
