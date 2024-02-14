@@ -6,36 +6,42 @@
   margin: auto;
   height: 98vh;
   text-align: center;
-  align-items: center;
-  justify-content: center;
   max-width: 1200px;
   display: grid;
   grid-template-areas: "li loli";
 
   .links {
     grid-area: li;
+    display: grid;
     grid-template-areas:
       "lo"
       "re"
       "ma";
     align-items: center;
     justify-content: center;
-    padding: 30px;
-    height: 600px;
+    //padding: 10px;
+    height: 98vh;
     width: 600px;
 
+    .loan,
+    .return,
+    .management {
+      height: 200px;
+      width: 500px;
+      border-radius: 10px;
+      border: 2px #fff solid;
+      background-color: #0048ff;
+    }
+
     .loan {
-      height: 100px;
       grid-area: lo;
     }
 
     .return {
-      height: 100px;
       grid-area: re;
     }
 
     .management {
-      height: 100px;
       grid-area: ma;
     }
   }
@@ -44,6 +50,6 @@
     grid-area: loli;
     padding: 30px;
     width: 600px;
-    height: 600px;
+    height: 98vh;
   }
 }
