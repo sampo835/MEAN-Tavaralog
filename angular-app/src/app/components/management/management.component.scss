@@ -1,0 +1,36 @@
+* {
+  border: 1px #000 solid;
+}
+
+.container {
+  margin: auto;
+  max-width: 1500px;
+  height: 98vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1);
+  grid-template-areas: "us it lo";
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  .users,
+  .items,
+  .locations {
+    width: 400px;
+    height: 98vh;
+    //background-color: #0048ff;
+  }
+
+  .users {
+    grid-area: us;
+  }
+
+  .items {
+    grid-area: it;
+  }
+
+  .locations {
+    grid-area: lo;
+  }
+}
