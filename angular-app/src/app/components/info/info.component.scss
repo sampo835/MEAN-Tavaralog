@@ -1,13 +1,36 @@
+
+
 .info {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Optional: Set the height to 100% of the viewport height */
-  }
+}
 
-  .top-left-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
+.top-left-button {
+    text-align: left;
+    margin-bottom: 10px; /* Add margin between button and text areas */
+}
+
+.back-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.text-areas {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-text-area,
+.right-text-area {
+    width: 48%; /* Adjust the width as needed, leaving some space for margin */
+}
+
+.left-text-area p,
+.right-text-area p {
+    margin: 0; /* Remove default margin for paragraphs */
+}
+
+/* Add any additional styling as needed */
