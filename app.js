@@ -6,6 +6,7 @@ const itemsRoutes = require("./routes/items");
 const usersRoutes = require("./routes/users");
 
 const app = express();
+//app.use(cors());
 
 // Connect To Database
 mongoose.connect(config.database);
