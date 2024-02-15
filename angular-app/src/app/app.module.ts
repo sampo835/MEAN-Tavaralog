@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { ScanAdminComponent } from './components/scan-admin/scan-admin.component';
 import { ScanUserComponent } from './components/scan-user/scan-user.component';
-import { ScanItemComponent } from './components/scan-item/scan-item.component';
+import { LoanItemComponent } from './components/loan-item/loan-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReturnItemComponent } from './components/return-item/return-item.component';
 import { ManagementComponent } from './components/management/management.component';
@@ -18,7 +18,7 @@ import { InfoComponent } from './components/info/info.component';
     MainComponent,
     ScanAdminComponent,
     ScanUserComponent,
-    ScanItemComponent,
+    LoanItemComponent,
     ReturnItemComponent,
     ManagementComponent,
     InfoComponent,
