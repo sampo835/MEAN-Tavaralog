@@ -9,6 +9,8 @@ import { ScanUserComponent } from './components/scan-user/scan-user.component';
 import { ScanItemComponent } from './components/scan-item/scan-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReturnItemComponent } from './components/return-item/return-item.component';
+import { ManagementComponent } from './components/management/management.component';
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ReturnItemComponent } from './components/return-item/return-item.compon
     ScanUserComponent,
     ScanItemComponent,
     ReturnItemComponent,
+    ManagementComponent,
+    InfoComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
