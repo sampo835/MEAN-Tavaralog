@@ -1,6 +1,6 @@
-/* {
+* {
   border: 1px #131313 solid;
-}*/
+}
 
 .container {
   margin: auto;
@@ -28,32 +28,16 @@
 
     .loan,
     .return {
-      height: 200px;
+      height: 300px;
       width: 500px;
       border-radius: 10px;
       border: 2px #fff solid;
-      background-color: #0048ff;
+      background-color: #141414;
       transition: all 0.3s ease-in-out;
 
       &:hover {
-        height: 190px;
-        width: 480px;
-        background-color: #0034b9;
-      }
-    }
-
-    .management,
-    .info {
-      height: 100px;
-      width: 240px;
-      border-radius: 10px;
-      border: 2px #fff solid;
-      background-color: #0048ff;
-      transition: all 0.5s ease-in-out;
-
-      &:hover {
-        height: 80px;
-        width: 220px;
+        height: 199px;
+        width: 498px;
         background-color: #0034b9;
       }
     }
@@ -64,14 +48,6 @@
 
     .return {
       grid-area: re;
-    }
-
-    .management {
-      grid-area: ma;
-    }
-
-    .info {
-      grid-area: in;
     }
   }
 
@@ -89,16 +65,16 @@
 
     .management,
     .info {
-      height: 100px;
+      height: 200px;
       width: 240px;
       border-radius: 10px;
       border: 2px #fff solid;
-      background-color: #0048ff;
+      background-color: #141414;
       transition: all 0.3s ease-in-out;
 
       &:hover {
-        height: 95px;
-        width: 230px;
+        height: 99px;
+        width: 239px;
         background-color: #0034b9;
       }
     }
