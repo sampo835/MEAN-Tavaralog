@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const config = require("./config/database");
 const itemsRoutes = require("./routes/items");
@@ -21,6 +22,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
 // Use routes

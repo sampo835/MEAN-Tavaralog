@@ -5,23 +5,28 @@ const Item = require("../models/item");
 // Route to add an item
 router.post("/add-item", async (req, res) => {
   try {
-    const { name, isLoaned, rfidTag } = req.body;
+    const { itemname, isLoaned, rfidTag } = req.body;
 
-    // Create a new item instance
+    // Validate required fields
+    if (!itemname || !rfidTag) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
     const newItem = new Item({
-      name,
+      itemname,
       isLoaned: isLoaned || false,
       rfidTag,
     });
 
-    // Save the item to the database
-    const savedItem = await newItem.save();
+    await newItem.save();
 
-    res
-      .status(201)
-      .json({ message: "Item added successfully", item: savedItem });
+    res.status(201).json({ message: "Item added successfully" });
   } catch (error) {
-    console.error("Error adding item:", error);
+    if (error.code === 11000 || error.name === "MongoError") {
+      return res.status(400).json({ error: "Duplicate key error" });
+    }
+
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -51,9 +56,9 @@ router.delete("/delete-item/:itemId", async (req, res) => {
 router.get("/get-items", async (req, res) => {
   try {
     // Fetch all items from the database
-    const allItems = await Item.find();
+    const items = await Item.find();
 
-    res.status(200).json(allItems);
+    res.status(200).json(items);
   } catch (error) {
     console.error("Error fetching items:", error);
     res.status(500).json({ error: "Internal Server Error" });

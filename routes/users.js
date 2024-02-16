@@ -5,10 +5,13 @@ const User = require("../models/user");
 // Route to add a new user
 router.post("/add-user", async (req, res) => {
   try {
-    // Extract user data from request body
     const { username, role, group, rfidTag } = req.body;
 
-    // Create a new user instance
+    // Validate required fields
+    if (!username || !group || !rfidTag) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
     const newUser = new User({
       username,
       role,
@@ -16,13 +19,14 @@ router.post("/add-user", async (req, res) => {
       rfidTag,
     });
 
-    // Save the user to the database
     await newUser.save();
 
-    // Respond with a success message
     res.status(201).json({ message: "User added successfully" });
   } catch (error) {
-    // Handle errors
+    if (error.code === 11000 || error.name === "MongoError") {
+      return res.status(400).json({ error: "Duplicate key error" });
+    }
+
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -77,7 +81,7 @@ router.get("/check-admin/:rfidTag", async (req, res) => {
 
     if (user) {
       // Check if the user has an admin role
-      if (user.role === 'admin') {
+      if (user.role === "admin") {
         res.status(200).json({ isAdmin: true });
       } else {
         res.status(200).json({ isAdmin: false });

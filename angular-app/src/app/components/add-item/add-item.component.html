@@ -1,0 +1,26 @@
+<section class="container">
+  <div class="items">
+    <!-- Add Item Form -->
+    <form (ngSubmit)="addItem()" #itemForm="ngForm">
+      <label for="username">Itemname:</label>
+      <input
+        type="text"
+        id="itemname"
+        name="itemname"
+        [(ngModel)]="newItem.itemname"
+        required
+      />
+
+      <label for="rfidTag">RFID Tag:</label>
+      <input
+        type="text"
+        id="rfidTag"
+        name="rfidTag"
+        [(ngModel)]="newItem.rfidTag"
+        required
+      />
+
+      <button type="submit">Add Item</button>
+    </form>
+  </div>
+</section>

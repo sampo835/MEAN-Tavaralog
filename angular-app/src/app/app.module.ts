@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReturnItemComponent } from './components/return-item/return-item.component';
 import { ManagementComponent } from './components/management/management.component';
 import { InfoComponent } from './components/info/info.component';
+import { FormsModule } from '@angular/forms';
+import { AddItemComponent } from './components/add-item/add-item.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -22,8 +25,10 @@ import { InfoComponent } from './components/info/info.component';
     ReturnItemComponent,
     ManagementComponent,
     InfoComponent,
+    AddItemComponent,
+    AddUserComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

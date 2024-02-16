@@ -1,0 +1,44 @@
+<section class="container">
+  <div class="users">
+    <!-- Add User Form -->
+    <form (ngSubmit)="addUser()" #userForm="ngForm">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="newUser.username"
+        required
+      />
+
+      <label for="role">Role:</label>
+      <input
+        type="text"
+        id="role"
+        name="role"
+        [(ngModel)]="newUser.role"
+        required
+      />
+
+      <label for="group">Group:</label>
+      <input
+        type="text"
+        id="group"
+        name="group"
+        [(ngModel)]="newUser.group"
+        required
+      />
+
+      <label for="rfidTag">RFID Tag:</label>
+      <input
+        type="text"
+        id="rfidTag"
+        name="rfidTag"
+        [(ngModel)]="newUser.rfidTag"
+        required
+      />
+
+      <button type="submit">Add User</button>
+    </form>
+  </div>
+</section>

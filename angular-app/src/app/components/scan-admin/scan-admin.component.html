@@ -1,9 +1,17 @@
-<div class="scan-admin-container">
-  <div class="top-left-button">
-    <button class="back-button" routerLink="/">PALAA PÄÄVALIKKOON</button>
-  </div>
+<section class="container">
+  <div class="admins">
+    <!-- Add Item Form -->
+    <form (ngSubmit)="checkAdmin()" #itemForm="ngForm">
+      <label for="rfidTag">RFID Tag:</label>
+      <input
+        type="text"
+        id="rfidTag"
+        name="rfidTag"
+        [(ngModel)]="scannedData.rfidTag"
+        required
+      />
 
-  <div class="middle-text">
-    <p>SKANNAA ADMIN TAGI</p>
+      <button type="submit">Check</button>
+    </form>
   </div>
-</div>
+</section>

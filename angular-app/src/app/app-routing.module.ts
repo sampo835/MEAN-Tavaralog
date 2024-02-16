@@ -7,6 +7,8 @@ import { ReturnItemComponent } from './components/return-item/return-item.compon
 import { InfoComponent } from './components/info/info.component';
 import { LoanItemComponent } from './components/loan-item/loan-item.component';
 import { ManagementComponent } from './components/management/management.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { AddItemComponent } from './components/add-item/add-item.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'return-item', component: ReturnItemComponent },
   { path: 'info', component: InfoComponent },
   { path: 'management', component: ManagementComponent },
+  { path: 'add-user', component: AddUserComponent },
+  { path: 'add-item', component: AddItemComponent },
 ];
 
 @NgModule({

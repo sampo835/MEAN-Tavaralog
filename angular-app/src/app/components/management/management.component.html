@@ -1,9 +1,21 @@
 <section class="container">
   <div class="users">
     <p>Users</p>
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.username }} - {{ user.group }}
+        <button (click)="deleteUser(user._id)">Delete</button>
+      </li>
+    </ul>
   </div>
   <div class="items">
     <p>Items</p>
+    <ul>
+      <li *ngFor="let item of items">
+        {{ item.itemname }}
+        <button (click)="deleteItem(item._id)">Delete</button>
+      </li>
+    </ul>
   </div>
   <div class="locations">
     <p>Locations</p>
