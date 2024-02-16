@@ -1,17 +1,32 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+/*import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+const SerialPort = require('serialport');
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArduinoService {
-  private apiUrl = 'http://127.0.0.1:3000/users/check-admin'; // Adjust the URL based on your server setup
+  private port: any;
+  private rfidDataSubject: Subject<string> = new Subject<string>();
+  rfidData$ = this.rfidDataSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
-
-  getRfidData(): Observable<any> {
-    // Make an HTTP request to the Node.js server to check RFID data
-    return this.http.get<any>(this.apiUrl);
+  constructor() {
+    this.initialize();
   }
-}
+
+  initialize() {
+    this.port = new SerialPort('COM4', { baudRate: 115200 });
+
+    this.port.on('data', (data: Buffer) => {
+      const receivedData = data.toString();
+      console.log(receivedData); // Handle the received data as needed
+
+      // Emit RFID data to subscribers
+      this.rfidDataSubject.next(receivedData);
+    });
+
+    this.port.on('error', (err: any) => {
+      console.error('Error:', err.message);
+    });
+  }
+}*/

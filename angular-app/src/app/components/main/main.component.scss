@@ -1,6 +1,6 @@
-* {
+/* {
   border: 1px #131313 solid;
-}
+}*/
 
 .container {
   margin: auto;
@@ -31,12 +31,12 @@
       height: 300px;
       width: 500px;
       border-radius: 10px;
-      border: 2px #fff solid;
-      background-color: #141414;
+      border: 2px #999999 solid;
+      background-color: #ffffff;
       transition: all 0.3s ease-in-out;
 
       &:hover {
-        height: 199px;
+        height: 299px;
         width: 498px;
         background-color: #0034b9;
       }
@@ -68,12 +68,12 @@
       height: 200px;
       width: 240px;
       border-radius: 10px;
-      border: 2px #fff solid;
-      background-color: #141414;
+      border: 2px #999999 solid;
+      background-color: #ffffff;
       transition: all 0.3s ease-in-out;
 
       &:hover {
-        height: 99px;
+        height: 199px;
         width: 239px;
         background-color: #0034b9;
       }
