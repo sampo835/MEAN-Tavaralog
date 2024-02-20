@@ -26,9 +26,8 @@ export class UserService {
     return this.http.get<any[]>(`${this.apiUrl}/get-users`);
   }
 
-  checkAdmin(rfidTag: string): Observable<boolean> {
-    // Modify this method based on your backend API
-    // This method should return an observable with a boolean indicating whether the user is an admin
-    return this.http.get<boolean>(`${this.apiUrl}/check-admin/${rfidTag}`);
+  checkAdmin(rfidTag: string): Observable<{ isAdmin: boolean }> {
+    const url = `${this.apiUrl}/check-admin/${rfidTag}`;
+    return this.http.get<{ isAdmin: boolean }>(url);
   }
 }
