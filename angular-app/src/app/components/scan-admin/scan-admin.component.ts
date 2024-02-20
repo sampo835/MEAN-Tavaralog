@@ -1,7 +1,7 @@
 // scan-admin.component.ts
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-scan-admin',

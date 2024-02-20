@@ -2,7 +2,7 @@
   "name": "loaning_system",
   "version": "1.0.0",
   "description": "loaning system for items",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest"
   },

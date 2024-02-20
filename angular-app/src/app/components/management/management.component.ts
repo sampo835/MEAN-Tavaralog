@@ -1,7 +1,7 @@
 // management.component.ts
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { ItemService } from '../../services/item.service';
+import { UserService } from '../../services/user/user.service';
+import { ItemService } from '../../services/item/item.service';
 
 @Component({
   selector: 'app-management',

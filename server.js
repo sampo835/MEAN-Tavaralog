@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const config = require("./config/database");
 const itemsRoutes = require("./routes/items");
 const usersRoutes = require("./routes/users");
+const arduinoController = require("./controller/arduino"); // RFID READ
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 // Use routes
 app.use("/items", itemsRoutes);
 app.use("/users", usersRoutes);
+app.use("/arduino", arduinoController); // RFID READ
 
 // Start the server
 const port = 3000;
