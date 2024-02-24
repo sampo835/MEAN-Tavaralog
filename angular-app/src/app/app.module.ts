@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from './components/main/main.component';
-import { ScanAdminComponent } from './components/scan-admin/scan-admin.component';
 import { ScanUserComponent } from './components/scan-user/scan-user.component';
 import { LoanItemComponent } from './components/loan-item/loan-item.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,12 +12,12 @@ import { InfoComponent } from './components/info/info.component';
 import { FormsModule } from '@angular/forms';
 import { AddItemComponent } from './components/add-item/add-item.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import { MainMenuComponent } from './components/main-menu/main-menu.component';
+import { CheckAdminComponent } from './components/check-admin/check-admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
-    ScanAdminComponent,
     ScanUserComponent,
     LoanItemComponent,
     ReturnItemComponent,
@@ -27,6 +25,8 @@ import { AddUserComponent } from './components/add-user/add-user.component';
     InfoComponent,
     AddItemComponent,
     AddUserComponent,
+    MainMenuComponent,
+    CheckAdminComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

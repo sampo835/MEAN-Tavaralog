@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScanAdminComponent } from './scan-admin.component';
+import { MainMenuComponent } from './main-menu.component';
 
-describe('ScanAdminComponent', () => {
-  let component: ScanAdminComponent;
-  let fixture: ComponentFixture<ScanAdminComponent>;
+describe('MainMenuComponent', () => {
+  let component: MainMenuComponent;
+  let fixture: ComponentFixture<MainMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ScanAdminComponent]
+      declarations: [MainMenuComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ScanAdminComponent);
+    fixture = TestBed.createComponent(MainMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
