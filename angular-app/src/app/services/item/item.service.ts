@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ItemService {
-  private apiUrl = 'http://127.0.0.1:3000/items'; // Update with your actual API endpoi
+  private apiUrl = 'http://127.0.0.1:3000/items';
 
   constructor(private http: HttpClient) {}
 
@@ -19,9 +19,31 @@ export class ItemService {
   }
 
   getItems(): Observable<any[]> {
-    // Implement this method based on your backend API
-    // This method should return an observable with the user data
-    // Make sure to handle error cases appropriately
     return this.http.get<any[]>(`${this.apiUrl}/get-items`);
+  }
+
+  loanItem(itemRfidTag: string, userRfidTag: string): Observable<any> {
+    // Remove leading and trailing whitespace characters
+    const trimmedItemRfidTag = itemRfidTag.trim();
+    const trimmedUserRfidTag = userRfidTag.trim();
+
+    const body = {
+      itemRfidTag: trimmedItemRfidTag,
+      userRfidTag: trimmedUserRfidTag,
+    };
+
+    return this.http.put(`${this.apiUrl}/loan-item`, body);
+  }
+
+  /*returnItem(rfidTag: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/return/${rfidTag}`, null);
+  }*/
+
+  returnItem(rfidTag: string): Observable<any> {
+    // Remove leading and trailing whitespace characters
+    const trimmedRfidTag = rfidTag.trim();
+    console.log('Trimmed RFID Tag in Service:', trimmedRfidTag);
+
+    return this.http.put(`${this.apiUrl}/return/${trimmedRfidTag}`, null);
   }
 }

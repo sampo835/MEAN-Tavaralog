@@ -9,7 +9,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     //width: 800,
     //height: 600,
-    //fullscreen: true, // Fullcreen window, hides bottom bar
+    fullscreen: true, // Fullcreen window, hides bottom bar
     frame: false, // Hides the window frame (title bar)
     webPreferences: {
       nodeIntegration: false,

@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/item");
+const User = require("../models/user");
+
+//----------------------------------------------------------------------//
 
 // Route to add an item
 router.post("/add-item", async (req, res) => {
@@ -15,6 +18,8 @@ router.post("/add-item", async (req, res) => {
     const newItem = new Item({
       itemname,
       isLoaned: isLoaned || false,
+      loaner: null,
+      location: "stock",
       rfidTag,
     });
 
@@ -30,6 +35,8 @@ router.post("/add-item", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//----------------------------------------------------------------------//
 
 // Route to delete an item by ID
 router.delete("/delete-item/:itemId", async (req, res) => {
@@ -52,6 +59,8 @@ router.delete("/delete-item/:itemId", async (req, res) => {
   }
 });
 
+//----------------------------------------------------------------------//
+
 // Route to get all items
 router.get("/get-items", async (req, res) => {
   try {
@@ -65,13 +74,18 @@ router.get("/get-items", async (req, res) => {
   }
 });
 
-// Route to loan an item
-router.put("/loan/:itemId", async (req, res) => {
-  const itemId = req.params.itemId;
+//----------------------------------------------------------------------//
+
+// Route to loan an item by providing both user and item RFID tags
+router.put("/loan-item", async (req, res) => {
+  const { itemRfidTag, userRfidTag } = req.body;
+
+  console.log("Received Item RFID Tag:", itemRfidTag);
+  console.log("Received User RFID Tag:", userRfidTag);
 
   try {
-    // Find the item by ID
-    const item = await Item.findById(itemId);
+    // Find the item by item RFID tag
+    const item = await Item.findOne({ rfidTag: itemRfidTag });
 
     if (!item) {
       return res.status(404).json({ message: "Item not found" });
@@ -85,6 +99,14 @@ router.put("/loan/:itemId", async (req, res) => {
     // Update the item's loan status
     item.isLoaned = true;
 
+    // Associate the user ObjectId with the loaner field
+    const user = await User.findOne({ rfidTag: userRfidTag });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    item.loaner = user._id;
+
     // Save the updated item
     await item.save();
 
@@ -95,13 +117,16 @@ router.put("/loan/:itemId", async (req, res) => {
   }
 });
 
+//----------------------------------------------------------------------//
+
 // Route to return a loaned item
-router.put("/return/:itemId", async (req, res) => {
-  const itemId = req.params.itemId;
+router.put("/return/:rfidTag", async (req, res) => {
+  const rfidTag = req.params.rfidTag;
+  console.log("Received RFID Tag:", rfidTag);
 
   try {
-    // Find the item by ID
-    const item = await Item.findById(itemId);
+    // Find the item by RFID tag
+    const item = await Item.findOne({ rfidTag });
 
     if (!item) {
       return res.status(404).json({ message: "Item not found" });
@@ -114,6 +139,9 @@ router.put("/return/:itemId", async (req, res) => {
 
     // Update the item's loan status
     item.isLoaned = false;
+
+    // Set the loaner field to null
+    item.loaner = null;
 
     // Save the updated item
     const updatedItem = await item.save();

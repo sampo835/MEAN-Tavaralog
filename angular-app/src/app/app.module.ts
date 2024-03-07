@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ScanUserComponent } from './components/scan-user/scan-user.component';
 import { LoanItemComponent } from './components/loan-item/loan-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReturnItemComponent } from './components/return-item/return-item.component';
@@ -18,7 +17,6 @@ import { CheckAdminComponent } from './components/check-admin/check-admin.compon
 @NgModule({
   declarations: [
     AppComponent,
-    ScanUserComponent,
     LoanItemComponent,
     ReturnItemComponent,
     ManagementComponent,

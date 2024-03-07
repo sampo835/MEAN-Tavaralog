@@ -12,7 +12,7 @@ const itemSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  user: {
+  loaner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
