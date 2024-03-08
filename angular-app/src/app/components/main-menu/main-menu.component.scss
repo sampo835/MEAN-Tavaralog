@@ -1,99 +1,95 @@
 /* {
-  border: 1px #131313 solid;
+  border: 1px #ffff00 solid;
 }*/
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px);
+}
 
 .container {
   margin: auto;
-  height: 98vh;
+  //height: 98vh;
+  border-radius: 25px;
   text-align: center;
   max-width: 1200px;
   display: grid;
   grid-template-areas:
-    "bli loli"
-    "sli loli";
+    "bli"
+    "loli"
+    "sli";
+  background-color: #fff;
 
   .big-links {
-    grid-area: bli;
     display: grid;
-    grid-template-columns: repeat(3, 1);
-    grid-template-rows: repeat(1, auto);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto; // Two rows: one for heading, one for loan and return
     grid-template-areas:
-      "lo"
-      "re";
+      "head head"
+      "lo re";
+    grid-gap: 20px;
     align-items: center;
     justify-content: center;
-    //padding-top: 150px;
-    //height: 98vh;
-    width: 600px;
+    width: 1200px;
+    margin: 0 auto; // Center the component on the page
+    padding-bottom: 30px;
+    //background-color: #fff;
+  }
 
-    .loan,
-    .return {
-      height: 300px;
-      width: 500px;
-      border-radius: 10px;
-      border: 2px #999999 solid;
-      background-color: #ffffff;
-      transition: all 0.3s ease-in-out;
-      cursor: pointer;
+  .heading {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    grid-area: head; // Place the heading in the specified grid area
+  }
 
-      &:hover {
-        height: 299px;
-        width: 498px;
-        background-color: #0034b9;
-      }
-    }
+  .loan,
+  .return {
+    height: 300px;
+    width: 500px;
+    font-size: 60px;
+    border-radius: 10px;
+    background-color: #00aaff;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    margin: 0 auto; // Center the loan and return elements horizontally
 
-    .loan {
-      grid-area: lo;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .return {
-      grid-area: re;
+    &:hover {
+      background-color: #0034b9;
     }
   }
 
-  .small-links {
-    grid-area: sli;
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(2, auto);
-    grid-template-areas: "ma in";
-    align-items: center;
-    justify-content: center;
-    //padding: 10px;
-    //height: 18vh;
-    width: 600px;
+  .loan {
+    grid-area: lo;
+  }
 
-    .management,
-    .info {
-      height: 200px;
-      width: 240px;
-      border-radius: 10px;
-      border: 2px #999999 solid;
-      background-color: #ffffff;
-      transition: all 0.3s ease-in-out;
-      cursor: pointer;
-
-      &:hover {
-        height: 199px;
-        width: 239px;
-        background-color: #0034b9;
-      }
-    }
-
-    .management {
-      grid-area: ma;
-    }
-
-    .info {
-      grid-area: in;
-    }
+  .return {
+    grid-area: re;
   }
 
   .loan-list {
     grid-area: loli;
-    padding: 30px;
-    width: 600px;
-    height: 98vh;
+    //padding: 30px;
+    width: 1200px;
+    max-height: 400px;
+
+    .loan-heading {
+      text-align: center;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .loaned-items {
+      overflow-y: auto;
+      max-height: 200px;
+      background-color: #fff;
+    }
   }
 }

@@ -22,6 +22,10 @@ export class ItemService {
     return this.http.get<any[]>(`${this.apiUrl}/get-items`);
   }
 
+  getLoanedItems(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/get-loaned-items`);
+  }
+
   loanItem(itemRfidTag: string, userRfidTag: string): Observable<any> {
     // Remove leading and trailing whitespace characters
     const trimmedItemRfidTag = itemRfidTag.trim();

@@ -18,7 +18,7 @@ import { ItemService } from '../../services/item/item.service';
 export class LoanItemComponent implements OnInit {
   enteredUserRfidTag: string = '';
   enteredItemRfidTag: string = '';
-  displayMessage: string = 'Skannaa lainaaja';
+  displayMessage: string = 'Skannaa henkilökortti';
 
   constructor(
     private rfidService: RfidService,
@@ -32,7 +32,7 @@ export class LoanItemComponent implements OnInit {
     this.rfidService.rfidData$.subscribe((data) => {
       //console.log('RFID Data Received:', data);
 
-      if (this.displayMessage === 'Skannaa lainaaja') {
+      if (this.displayMessage === 'Skannaa henkilökortti') {
         this.enteredUserRfidTag = data;
         //console.log('Entered User RFID Tag:', this.enteredUserRfidTag);
 

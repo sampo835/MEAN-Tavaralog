@@ -1,23 +1,37 @@
 <section class="container">
   <div class="users">
-    <p>Users</p>
-    <ul>
-      <li *ngFor="let user of users">
-        {{ user.username }} - {{ user.group }}
-        <button (click)="deleteUser(user._id)">Delete</button>
-      </li>
-    </ul>
+    <div class="user-header">
+      <h2>Käyttäjät</h2>
+    </div>
+    <div class="user-content">
+      <ul>
+        <li *ngFor="let user of users">
+          {{ user.username }} - {{ user.group }}
+          <button (click)="deleteUser(user._id)">Poista</button>
+        </li>
+      </ul>
+    </div>
+    <div class="user-button" routerLink="/add-user">
+      <p>Lisää uusi</p>
+    </div>
   </div>
   <div class="items">
-    <p>Items</p>
-    <ul>
-      <li *ngFor="let item of items">
-        {{ item.itemname }}
-        <button (click)="deleteItem(item._id)">Delete</button>
-      </li>
-    </ul>
+    <div class="item-header">
+      <h2>Tavarat</h2>
+    </div>
+    <div class="item-content">
+      <ul>
+        <li *ngFor="let item of items">
+          {{ item.itemname }}
+          <button (click)="deleteItem(item._id)">Poista</button>
+        </li>
+      </ul>
+    </div>
+    <div class="item-button" routerLink="/add-item">
+      <p>Lisää uusi</p>
+    </div>
   </div>
-  <div class="locations">
-    <p>Locations</p>
+  <div class="button">
+    <button class="back-button" routerLink="/">PALAA PÄÄVALIKKOON</button>
   </div>
 </section>

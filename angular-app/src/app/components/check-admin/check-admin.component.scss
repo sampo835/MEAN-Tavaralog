@@ -1,13 +1,32 @@
-.scan-item-container {
+* {
+  border: 1px #ffff00 solid;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px);
+}
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Optional: Set the height to 100% of the viewport height */
+  //height: 100vh; /* Optional: Set the height to 100% of the viewport height */
 }
 
-.top-left-button {
+.text {
+  flex-grow: 1; /* Allow the text to take up the available space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  bottom: 10px; /* Adjust the distance from the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px; /* Add padding as needed */
 }

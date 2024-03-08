@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  height: 70px; // Set the height of your header
+  //background-color: #333; // Set your desired background color
+  color: white; // Set your desired text color
+
+  /* Add additional styling for your header if needed */
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #333; // Set your desired background color
+  color: white; // Set your desired text color
+
+  .logo-container {
+    margin-right: 10px; // Adjust as needed for spacing between logo and title
+  }
+
+  .logo {
+    img {
+      max-height: 40px; // Adjust the max height of your logo
+    }
+  }
+
+  .title {
+    flex-grow: 1; // Allow the title to take up available space
+    text-align: center; // Center the text horizontally
+    h1 {
+      margin: 0; // Remove default margin for h1
+    }
+  }
+  .links {
+    display: flex;
+    gap: 10px; // Adjust as needed for spacing between squares
+  }
+
+  .settings,
+  .info {
+    width: 40px;
+    height: 40px;
+    background-color: #fff; // Set your desired background color
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px; // Adjust as needed for rounded corners
+    color: #333; // Set your desired text color
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #0034b9;
+    }
+  }
+}

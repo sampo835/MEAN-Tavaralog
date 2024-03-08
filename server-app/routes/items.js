@@ -27,8 +27,13 @@ router.post("/add-item", async (req, res) => {
 
     res.status(201).json({ message: "Item added successfully" });
   } catch (error) {
+    console.error("MongoDB Error:", error); // Log the full error for debugging
+
     if (error.code === 11000 || error.name === "MongoError") {
-      return res.status(400).json({ error: "Duplicate key error" });
+      const duplicateKey = error.keyValue ? error.keyValue.itemname : "unknown"; // Extract duplicate key value
+      return res
+        .status(400)
+        .json({ error: `Duplicate key error for RFID tag: ${duplicateKey}` });
     }
 
     console.error(error);
@@ -70,6 +75,21 @@ router.get("/get-items", async (req, res) => {
     res.status(200).json(items);
   } catch (error) {
     console.error("Error fetching items:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//----------------------------------------------------------------------//
+
+// Route to get loaned items
+router.get("/get-loaned-items", async (req, res) => {
+  try {
+    // Fetch all loaned items from the database
+    const loanedItems = await Item.find({ isLoaned: true }).populate("loaner"); // Modify the condition based on your schema
+
+    res.status(200).json(loanedItems);
+  } catch (error) {
+    console.error("Error fetching loaned items:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

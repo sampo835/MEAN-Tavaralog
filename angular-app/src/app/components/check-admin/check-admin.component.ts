@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { RfidService } from '../../services/rfid/rfid.service';
 import { UserService } from '../../services/user/user.service';
@@ -7,32 +12,60 @@ import { UserService } from '../../services/user/user.service';
   selector: 'app-check-admin',
   templateUrl: './check-admin.component.html',
   styleUrls: ['./check-admin.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckAdminComponent implements OnInit {
-  enteredRfidTag: string = '';
+  enteredUserRfidTag: string = '';
+  displayMessage: string = 'Skannaa opettaja';
 
   constructor(
     private rfidService: RfidService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.rfidService.rfidData$.subscribe((data) => {
-      this.enteredRfidTag = data;
+      if (this.displayMessage === 'Skannaa opettaja') {
+        this.enteredUserRfidTag = data;
 
-      // Check if the scanned RFID tag is an admin's tag
-      this.userService.checkAdmin(this.enteredRfidTag).subscribe(
-        (response) => {
-          if (response.isAdmin) {
-            // Redirect to the management component if the user is an admin
-            this.router.navigate(['/management']);
+        this.userService.checkAdmin(this.enteredUserRfidTag).subscribe(
+          (response) => {
+            if (response.isAdmin) {
+              this.displayMessage = 'Skannaus onnistui';
+
+              this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+
+              setTimeout(() => {
+                this.router.navigate(['/management']); // Navigate to the "management" route
+              }, 2000);
+            } else {
+              this.displayMessage = 'Käyttäjä ei ole opettaja';
+
+              this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+
+              setTimeout(() => {
+                this.router.navigate(['']); // Navigate to the main menu
+              }, 2000);
+            }
+          },
+          (error) => {
+            if (error.status === 404) {
+              this.displayMessage = 'Käyttäjää ei löytynyt';
+            } else {
+              this.displayMessage =
+                'Jokin meni pieleen tarkistaessa admin-oikeuksia';
+            }
+
+            this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+
+            setTimeout(() => {
+              this.router.navigate(['']); // Navigate to the main menu even if there's an error
+            }, 2000);
           }
-        },
-        (error) => {
-          console.error('Error checking admin status:', error);
-        }
-      );
+        );
+      }
     });
   }
 }

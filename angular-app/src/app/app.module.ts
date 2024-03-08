@@ -13,6 +13,7 @@ import { AddItemComponent } from './components/add-item/add-item.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { CheckAdminComponent } from './components/check-admin/check-admin.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CheckAdminComponent } from './components/check-admin/check-admin.compon
     AddUserComponent,
     MainMenuComponent,
     CheckAdminComponent,
+    HeaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
