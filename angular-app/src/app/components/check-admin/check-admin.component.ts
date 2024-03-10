@@ -16,7 +16,7 @@ import { UserService } from '../../services/user/user.service';
 })
 export class CheckAdminComponent implements OnInit {
   enteredUserRfidTag: string = '';
-  displayMessage: string = 'Skannaa opettaja';
+  displayMessage: string = 'Lue lukukortti';
 
   constructor(
     private rfidService: RfidService,
@@ -27,7 +27,7 @@ export class CheckAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.rfidService.rfidData$.subscribe((data) => {
-      if (this.displayMessage === 'Skannaa opettaja') {
+      if (this.displayMessage === 'Lue lukukortti') {
         this.enteredUserRfidTag = data;
 
         this.userService.checkAdmin(this.enteredUserRfidTag).subscribe(

@@ -11,30 +11,30 @@
 .container {
   margin: auto;
   //height: 98vh;
-  border-radius: 25px;
+  //border-radius: 25px;
   text-align: center;
   max-width: 1200px;
   display: grid;
+  grid-gap: 20px;
   grid-template-areas:
     "bli"
     "loli"
     "sli";
-  background-color: #fff;
 
   .big-links {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto; // Two rows: one for heading, one for loan and return
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-      "head head"
-      "lo re";
-    grid-gap: 20px;
+      "head head head"
+      "lo te re";
+    grid-gap: 10px;
     align-items: center;
     justify-content: center;
     width: 1200px;
     margin: 0 auto; // Center the component on the page
     padding-bottom: 30px;
-    //background-color: #fff;
+    //padding: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
   }
 
   .heading {
@@ -51,6 +51,7 @@
     height: 300px;
     width: 500px;
     font-size: 60px;
+    font-weight: bold;
     border-radius: 10px;
     background-color: #00aaff;
     transition: all 0.3s ease-in-out;
@@ -70,6 +71,12 @@
     grid-area: lo;
   }
 
+  .text {
+    font-weight: bold;
+    font-size: 40px;
+    grid-area: te;
+  }
+
   .return {
     grid-area: re;
   }
@@ -78,7 +85,9 @@
     grid-area: loli;
     //padding: 30px;
     width: 1200px;
-    max-height: 400px;
+    height: 300px;
+    //max-height: 400px;
+    background-color: rgba(255, 255, 255, 0.5);
 
     .loan-heading {
       text-align: center;
@@ -89,7 +98,7 @@
     .loaned-items {
       overflow-y: auto;
       max-height: 200px;
-      background-color: #fff;
+      //background-color: rgba(255, 255, 255, 0.5);
     }
   }
 }

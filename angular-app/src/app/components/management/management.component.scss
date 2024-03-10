@@ -12,7 +12,7 @@
   margin: auto;
   max-width: 1500px;
   display: grid;
-  grid-template-columns: repeat(2, 1);
+  grid-template-columns: repeat(2, 600px); // Update this line
   grid-template-areas: "us it";
   grid-gap: 20px;
   align-items: center;
@@ -22,7 +22,8 @@
   .users,
   .items {
     //border-radius: 5px;
-    background-color: #fff;
+    //background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     margin: 20px;
     height: 400px;
     //width: 600px;

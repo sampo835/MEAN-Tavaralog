@@ -1,26 +1,21 @@
-<section class="container">
-  <div class="items">
-    <!-- Add Item Form -->
-    <form (ngSubmit)="addItem()" #itemForm="ngForm">
-      <label for="username">Itemname:</label>
-      <input
-        type="text"
-        id="itemname"
-        name="itemname"
-        [(ngModel)]="newItem.itemname"
-        required
-      />
+<!-- add-item.component.html -->
 
-      <label for="rfidTag">RFID Tag:</label>
-      <input
-        type="text"
-        id="rfidTag"
-        name="rfidTag"
-        [(ngModel)]="newItem.rfidTag"
-        required
-      />
+<div *ngIf="showForm">
+  <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+    <!-- Item Details Form Fields (itemname, etc.) -->
+    <label for="itemname">Item Name:</label>
+    <input type="text" formControlName="itemname" />
 
-      <button type="submit">Add Item</button>
-    </form>
-  </div>
-</section>
+    <!-- Other Form Fields -->
+
+    <button type="submit">Continue</button>
+  </form>
+</div>
+
+<div *ngIf="showScanTag">
+  <p>Scan the item's RFID tag...</p>
+</div>
+
+<div *ngIf="showSuccessMessage">
+  <p>Item added successfully!</p>
+</div>

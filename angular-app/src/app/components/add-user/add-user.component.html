@@ -1,44 +1,26 @@
-<section class="container">
-  <div class="users">
-    <!-- Add User Form -->
-    <form (ngSubmit)="addUser()" #userForm="ngForm">
-      <label for="username">Username:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="newUser.username"
-        required
-      />
+<div *ngIf="showForm">
+  <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+    <!-- Your form fields here -->
+    <label for="username">Username:</label>
+    <input type="text" id="username" formControlName="username" />
 
-      <label for="role">Role:</label>
-      <input
-        type="text"
-        id="role"
-        name="role"
-        [(ngModel)]="newUser.role"
-        required
-      />
+    <label for="role">Role:</label>
+    <select id="role" formControlName="role">
+      <option value="admin">Opettaja</option>
+      <option value="regular">Oppilas</option>
+    </select>
 
-      <label for="group">Group:</label>
-      <input
-        type="text"
-        id="group"
-        name="group"
-        [(ngModel)]="newUser.group"
-        required
-      />
+    <label for="group">Group:</label>
+    <input type="text" id="group" formControlName="group" />
 
-      <label for="rfidTag">RFID Tag:</label>
-      <input
-        type="text"
-        id="rfidTag"
-        name="rfidTag"
-        [(ngModel)]="newUser.rfidTag"
-        required
-      />
+    <button type="submit">Continue</button>
+  </form>
+</div>
 
-      <button type="submit">Add User</button>
-    </form>
-  </div>
-</section>
+<div *ngIf="showScanTag">
+  <p>Scan user tag...</p>
+</div>
+
+<div *ngIf="showSuccessMessage">
+  <p>User added successfully!</p>
+</div>

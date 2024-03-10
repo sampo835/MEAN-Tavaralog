@@ -1,4 +1,5 @@
 <section class="container">
+  <!-- User Section -->
   <div class="users">
     <div class="user-header">
       <h2>Käyttäjät</h2>
@@ -6,7 +7,7 @@
     <div class="user-content">
       <ul>
         <li *ngFor="let user of users">
-          {{ user.username }} - {{ user.group }}
+          {{ user.username }} - {{ user.role }} - {{ user.group }}
           <button (click)="deleteUser(user._id)">Poista</button>
         </li>
       </ul>
@@ -15,6 +16,8 @@
       <p>Lisää uusi</p>
     </div>
   </div>
+
+  <!-- Item Section -->
   <div class="items">
     <div class="item-header">
       <h2>Tavarat</h2>
@@ -31,6 +34,7 @@
       <p>Lisää uusi</p>
     </div>
   </div>
+
   <div class="button">
     <button class="back-button" routerLink="/">PALAA PÄÄVALIKKOON</button>
   </div>

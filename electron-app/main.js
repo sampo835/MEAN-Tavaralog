@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require("electron");
 const { SerialPort } = require("serialport"); // CORRECT WAY IN VERSION 12!!
 const { ReadlineParser } = require("@serialport/parser-readline"); // CORRECT WAY IN VERSION 12!!
 const path = require("path");
+const { spawn } = require("child_process");
 
 let mainWindow;
 
@@ -23,6 +24,25 @@ function createWindow() {
   mainWindow.loadURL(
     `file://${path.join(__dirname, "../dist/browser/index.html")}`
   );
+
+  // Start the server as a separate process
+  const serverProcess = spawn("node", [
+    path.join(__dirname, "../server-app/server.js"),
+  ]);
+
+  /*/ Event handling for server process
+  serverProcess.stdout.on("data", (data) => {
+    console.log(`Server stdout: ${data}`);
+  });
+
+  serverProcess.stderr.on("data", (data) => {
+    console.error(`Server stderr: ${data}`);
+  });
+
+  // Handle server process exit
+  serverProcess.on("close", (code) => {
+    console.log(`Server process exited with code ${code}`);
+  });*/
 
   //mainWindow.webContents.openDevTools(); // Open developer tools
   const port = new SerialPort({ path: "COM4", baudRate: 115200 }); // CORRECT WAY IN VERSION 12!!

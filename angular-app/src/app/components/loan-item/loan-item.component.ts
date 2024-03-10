@@ -18,7 +18,8 @@ import { ItemService } from '../../services/item/item.service';
 export class LoanItemComponent implements OnInit {
   enteredUserRfidTag: string = '';
   enteredItemRfidTag: string = '';
-  displayMessage: string = 'Skannaa henkilökortti';
+  displayMessage: string = 'Tunnistaudu';
+  isLoading: boolean = true; // Show waiting animation initially
 
   constructor(
     private rfidService: RfidService,
@@ -30,29 +31,22 @@ export class LoanItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.rfidService.rfidData$.subscribe((data) => {
-      //console.log('RFID Data Received:', data);
-
-      if (this.displayMessage === 'Skannaa henkilökortti') {
+      if (this.displayMessage === 'Tunnistaudu') {
         this.enteredUserRfidTag = data;
-        //console.log('Entered User RFID Tag:', this.enteredUserRfidTag);
-
         setTimeout(() => {
           this.displayMessage = 'Skannaa tavara';
-          //console.log('Display Message:', this.displayMessage);
           this.cdr.detectChanges();
         }, 500);
       } else if (this.displayMessage === 'Skannaa tavara') {
         this.enteredItemRfidTag = data;
-        //console.log('Entered Item RFID Tag:', this.enteredItemRfidTag);
+        this.isLoading = true; // Show waiting animation before loaning
+        this.cdr.detectChanges(); // Trigger change detection after updating isLoading
 
         this.itemService
           .loanItem(this.enteredItemRfidTag, this.enteredUserRfidTag)
           .subscribe(
             (response) => {
-              //console.log('Item loaned successfully:', response);
               this.displayMessage = 'Tavara lainattu onnistuneesti';
-              //console.log('Display Message:', this.displayMessage);
-
               this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
 
               setTimeout(() => {
@@ -61,6 +55,10 @@ export class LoanItemComponent implements OnInit {
             },
             (error) => {
               console.error('Error loaning item:', error);
+            },
+            () => {
+              this.isLoading = false; // Hide waiting animation after loaning
+              this.cdr.detectChanges(); // Trigger change detection after updating isLoading
             }
           );
       }
