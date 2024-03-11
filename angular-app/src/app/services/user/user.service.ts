@@ -26,6 +26,11 @@ export class UserService {
     return this.http.get<any[]>(`${this.apiUrl}/get-users`);
   }
 
+  checkUser(rfidTag: string): Observable<{ userExists: boolean }> {
+    const url = `${this.apiUrl}/check-user/${rfidTag}`;
+    return this.http.get<{ userExists: boolean }>(url);
+  }
+
   checkAdmin(rfidTag: string): Observable<{ isAdmin: boolean }> {
     const url = `${this.apiUrl}/check-admin/${rfidTag}`;
     return this.http.get<{ isAdmin: boolean }>(url);

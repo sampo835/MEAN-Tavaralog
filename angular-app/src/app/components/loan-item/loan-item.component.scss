@@ -2,7 +2,7 @@
   border: 1px #ffff00 solid;
 }*/
 
-.spinner {
+/*.spinner {
   border: 6px solid rgba(255, 255, 255, 0.3);
   border-top: 6px solid #ffffff;
   border-radius: 50%;
@@ -19,7 +19,7 @@
   100% {
     transform: rotate(360deg);
   }
-}
+}*/
 
 :host {
   display: flex;
@@ -43,27 +43,10 @@
   padding: 10px 20px;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.scan-prompt {
-  font-size: 24px;
-  animation: pulse 1.5s infinite;
-}
-
 .container {
   position: relative;
-  width: 300px; /* Adjust the width of the container */
-  height: 10px; /* Adjust the height of the container */
+  width: 400px; /* Adjust the width of the container */
+  height: 20px; /* Adjust the height of the container */
   background-color: #333; /* Background color of the container */
   overflow: hidden;
 }
@@ -74,6 +57,9 @@
   height: 100%; /* Full height inside the container */
   background-color: #fff; /* Color of the moving line */
   animation: moveLine 3s linear infinite;
+  transform: translateX(
+    -100%
+  ); /* Initial state: move to the left to be hidden */
 }
 
 @keyframes moveLine {

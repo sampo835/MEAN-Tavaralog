@@ -22,6 +22,13 @@ export class ItemService {
     return this.http.get<any[]>(`${this.apiUrl}/get-items`);
   }
 
+  checkItem(
+    rfidTag: string
+  ): Observable<{ itemExists: boolean; isLoaned: boolean }> {
+    const url = `${this.apiUrl}/check-item/${rfidTag}`;
+    return this.http.get<{ itemExists: boolean; isLoaned: boolean }>(url);
+  }
+
   getLoanedItems(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/get-loaned-items`);
   }

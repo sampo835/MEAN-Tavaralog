@@ -11,7 +11,9 @@
 }
 
 .text {
-  font-size: 40px;
+  font-size: 80px;
+  color: #ffffff;
+  //background-color: #333;
 }
 
 .back-button {
@@ -20,4 +22,35 @@
   left: 50%;
   transform: translateX(-50%);
   padding: 10px 20px;
+}
+
+.container {
+  position: relative;
+  width: 400px; /* Adjust the width of the container */
+  height: 20px; /* Adjust the height of the container */
+  background-color: #333; /* Background color of the container */
+  overflow: hidden;
+}
+
+.line-animation {
+  position: absolute;
+  width: 100%; /* Full width inside the container */
+  height: 100%; /* Full height inside the container */
+  background-color: #fff; /* Color of the moving line */
+  animation: moveLine 3s linear infinite;
+  transform: translateX(
+    -100%
+  ); /* Initial state: move to the left to be hidden */
+}
+
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }

@@ -17,6 +17,7 @@ import { UserService } from '../../services/user/user.service';
 export class CheckAdminComponent implements OnInit {
   enteredUserRfidTag: string = '';
   displayMessage: string = 'Lue lukukortti';
+  isLoading: boolean = true; // Show waiting animation initially
 
   constructor(
     private rfidService: RfidService,
@@ -32,6 +33,7 @@ export class CheckAdminComponent implements OnInit {
 
         this.userService.checkAdmin(this.enteredUserRfidTag).subscribe(
           (response) => {
+            this.isLoading = false;
             if (response.isAdmin) {
               this.displayMessage = 'Skannaus onnistui';
 
@@ -51,6 +53,7 @@ export class CheckAdminComponent implements OnInit {
             }
           },
           (error) => {
+            this.isLoading = false;
             if (error.status === 404) {
               this.displayMessage = 'Käyttäjää ei löytynyt';
             } else {
