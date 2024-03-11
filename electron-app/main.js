@@ -4,6 +4,23 @@ const { ReadlineParser } = require("@serialport/parser-readline"); // CORRECT WA
 const path = require("path");
 const { spawn } = require("child_process");
 
+// Start the server as a separate process
+const serverPath = path.join(__dirname, "../server-app/server.js");
+const serverProcess = spawn("node", [serverPath]);
+
+serverProcess.stdout.on("data", (data) => {
+  console.log(`Server stdout: ${data}`);
+});
+
+serverProcess.stderr.on("data", (data) => {
+  console.error(`Server stderr: ${data}`);
+});
+
+// Handle server process exit
+serverProcess.on("close", (code) => {
+  console.log(`Server process exited with code ${code}`);
+});
+
 let mainWindow;
 
 function createWindow() {
@@ -19,32 +36,13 @@ function createWindow() {
     },
   });
 
-  //mainWindow.loadFile("./dist/browser/index.html");
-  //mainWindow.loadFile(path.join(__dirname, "dist/browser/index.html"));
-  mainWindow.loadURL(
-    `file://${path.join(__dirname, "../dist/browser/index.html")}`
-  );
+  // Load the client
+  mainWindow.loadURL(`file://${__dirname}/../dist/browser/index.html`); //THIS IS THE RIGHT WAY TO LOAD CLIENT TO AVOID WHITE SCREEN IN EXE!!
 
-  // Start the server as a separate process
-  const serverProcess = spawn("node", [
-    path.join(__dirname, "../server-app/server.js"),
-  ]);
+  // Open developer tools
+  mainWindow.webContents.openDevTools();
 
-  /*/ Event handling for server process
-  serverProcess.stdout.on("data", (data) => {
-    console.log(`Server stdout: ${data}`);
-  });
-
-  serverProcess.stderr.on("data", (data) => {
-    console.error(`Server stderr: ${data}`);
-  });
-
-  // Handle server process exit
-  serverProcess.on("close", (code) => {
-    console.log(`Server process exited with code ${code}`);
-  });*/
-
-  //mainWindow.webContents.openDevTools(); // Open developer tools
+  // Setup RFID reader
   const port = new SerialPort({ path: "COM4", baudRate: 115200 }); // CORRECT WAY IN VERSION 12!!
   const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
@@ -55,8 +53,9 @@ function createWindow() {
   });
 
   mainWindow.on("closed", function () {
-    port.close();
-    mainWindow = null;
+    port.close(); // Close RFID read
+    serverProcess.kill(); // Close server
+    mainWindow = null; // Close client
   });
 }
 

@@ -28,7 +28,7 @@
   },
   "build": {
     "directories": {
-      "output": "./dist"
+      "output": "./desktop"
     }
   }
 }

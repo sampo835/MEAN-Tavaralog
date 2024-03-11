@@ -142,7 +142,7 @@ router.put("/loan-item", async (req, res) => {
 // Route to return a loaned item
 router.put("/return/:rfidTag", async (req, res) => {
   const rfidTag = req.params.rfidTag;
-  console.log("Received RFID Tag:", rfidTag);
+  //console.log("Received RFID Tag:", rfidTag);
 
   try {
     // Find the item by RFID tag
@@ -172,6 +172,31 @@ router.put("/return/:rfidTag", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Route to check if an item with a specific RFID tag exists and if it is loaned
+router.get("/check-item/:rfidTag", async (req, res) => {
+  try {
+    // Extract RFID tag from the request parameters
+    const rfidTag = req.params.rfidTag;
+
+    // Use Mongoose's findOne to find the item by RFID tag
+    const item = await Item.findOne({ rfidTag });
+
+    if (item) {
+      // Check if the item is loaned
+      const isLoaned = item.isLoaned; // Adjust this based on your item schema
+
+      res.status(200).json({ itemExists: true, isLoaned });
+    } else {
+      // Respond with a not found message if the item is not found
+      res.status(404).json({ itemExists: false, isLoaned: false });
+    }
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
