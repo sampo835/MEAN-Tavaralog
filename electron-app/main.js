@@ -1,34 +1,20 @@
 const { app, BrowserWindow } = require("electron");
 const { SerialPort } = require("serialport"); // CORRECT WAY IN VERSION 12!!
 const { ReadlineParser } = require("@serialport/parser-readline"); // CORRECT WAY IN VERSION 12!!
+const { startServer } = require("../server-app/server.js");
 const path = require("path");
-const { spawn } = require("child_process");
+const serverPort = 3000;
 
-// Start the server as a separate process
-const serverPath = path.join(__dirname, "../server-app/server.js");
-const serverProcess = spawn("node", [serverPath]);
+// Start the server
+startServer(serverPort);
 
-serverProcess.stdout.on("data", (data) => {
-  console.log(`Server stdout: ${data}`);
-});
-
-serverProcess.stderr.on("data", (data) => {
-  console.error(`Server stderr: ${data}`);
-});
-
-// Handle server process exit
-serverProcess.on("close", (code) => {
-  console.log(`Server process exited with code ${code}`);
-});
-
+// Create main window for the app
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    //width: 800,
-    //height: 600,
-    fullscreen: true, // Fullcreen window, hides bottom bar
-    frame: false, // Hides the window frame (title bar)
+    fullscreen: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -36,7 +22,7 @@ function createWindow() {
     },
   });
 
-  // Load the client
+  // Load the client to the window
   mainWindow.loadURL(`file://${__dirname}/../dist/browser/index.html`); //THIS IS THE RIGHT WAY TO LOAD CLIENT TO AVOID WHITE SCREEN IN EXE!!
 
   // Open developer tools
@@ -46,16 +32,14 @@ function createWindow() {
   const port = new SerialPort({ path: "COM4", baudRate: 115200 }); // CORRECT WAY IN VERSION 12!!
   const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
+  // Send RFID data to the renderer process
   parser.on("data", (data) => {
-    // Send RFID data to the renderer process
-    console.log(data);
     mainWindow.webContents.send("rfidData", data);
   });
 
   mainWindow.on("closed", function () {
     port.close(); // Close RFID read
-    serverProcess.kill(); // Close server
-    mainWindow = null; // Close client
+    mainWindow = null; // Close window
   });
 }
 
