@@ -3,10 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { RfidService } from '../../services/rfid/rfid.service';
 import { ItemService } from '../../services/item/item.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-return-item',
@@ -14,9 +16,11 @@ import { ItemService } from '../../services/item/item.service';
   styleUrls: ['./return-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReturnItemComponent implements OnInit {
+export class ReturnItemComponent implements OnInit, OnDestroy {
   enteredItemRfidTag: string = '';
   displayMessage: string = 'Skannaa tavara'; // Assuming you start with scanning the item
+  isLoading: boolean = true; // Show waiting animation initially
+  private rfidSubscription: Subscription | undefined;
 
   constructor(
     private rfidService: RfidService,
@@ -26,26 +30,33 @@ export class ReturnItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rfidService.rfidData$.subscribe((data) => {
-      // console.log('RFID Data Received:', data);
-
+    // Subscribe to RFID data
+    this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
+      // Check if the display message is 'Skannaa tavara'
       if (this.displayMessage === 'Skannaa tavara') {
         this.enteredItemRfidTag = data;
-        // console.log('Entered Item RFID Tag:', this.enteredItemRfidTag);
+        this.isLoading = true; // Show waiting animation before returning
 
+        // Trigger change detection after updating isLoading
+        this.cdr.detectChanges();
+
+        // Return the item using the itemService
         this.itemService.returnItem(this.enteredItemRfidTag).subscribe(
           (response) => {
-            // console.log('Item returned successfully:', response);
+            // Item returned successfully
+            this.isLoading = false; // Hide waiting animation after returning
             this.displayMessage = 'Tavara palautettu onnistuneesti';
-            // console.log('Display Message:', this.displayMessage);
 
-            this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+            // Trigger change detection after updating displayMessage
+            this.cdr.detectChanges();
 
+            // Navigate to the main menu after 2 seconds
             setTimeout(() => {
-              this.router.navigate(['']); // Assuming you want to navigate to the main menu
+              this.router.navigate(['']);
             }, 2000);
           },
           (error) => {
+            // Handle different error statuses
             if (error.status === 404) {
               this.displayMessage = 'Tavaraa ei löytynyt';
             } else if (error.status === 400) {
@@ -54,14 +65,26 @@ export class ReturnItemComponent implements OnInit {
               this.displayMessage = 'Jokin meni pieleen palautettaessa tavaraa';
             }
 
-            this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+            // Hide waiting animation after handling the error
+            this.isLoading = false;
 
+            // Trigger change detection after updating displayMessage
+            this.cdr.detectChanges();
+
+            // Navigate to the main menu after 2 seconds, even if there's an error
             setTimeout(() => {
-              this.router.navigate(['']); // Navigate to the main menu even if there's an error
+              this.router.navigate(['']);
             }, 2000);
           }
         );
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from the RFID data subscription to prevent memory leaks
+    if (this.rfidSubscription) {
+      this.rfidSubscription.unsubscribe();
+    }
   }
 }

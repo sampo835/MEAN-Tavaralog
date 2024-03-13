@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const config = require("./config/database");
 const itemsRoutes = require("./routes/items");
 const usersRoutes = require("./routes/users");
+const locationsRoutes = require("./routes/locations");
 const app = express();
 
 // Connect To Database
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 // Use routes
 app.use("/items", itemsRoutes);
 app.use("/users", usersRoutes);
+app.use("/locations", locationsRoutes);
 
 // Start the server
 const startServer = (port) => {

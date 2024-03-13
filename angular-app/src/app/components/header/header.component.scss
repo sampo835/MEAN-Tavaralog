@@ -1,62 +1,54 @@
 :host {
   display: block;
-  height: 70px; // Set the height of your header
-  //background-color: #333; // Set your desired background color
-  color: white; // Set your desired text color
-
-  /* Add additional styling for your header if needed */
+  height: 70px;
+  //background-color: #333;
+  color: white;
 }
 
 header {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #333; // Set your desired background color
-  color: white; // Set your desired text color
+  background-color: #000000;
+  color: white;
 
   .logo-container {
-    margin-right: 10px; // Adjust as needed for spacing between logo and title
+    margin-right: 10px;
   }
 
   .logo {
     img {
-      max-height: 40px; // Adjust the max height of your logo
+      max-height: 40px;
     }
   }
 
   .title {
-    flex-grow: 1; // Allow the title to take up available space
-    text-align: center; // Center the text horizontally
+    flex-grow: 1;
+    text-align: center;
     h1 {
-      margin: 0; // Remove default margin for h1
+      margin: 0;
     }
   }
   .links {
     display: flex;
-    gap: 10px; // Adjust as needed for spacing between squares
+    gap: 10px;
   }
 
   .settings,
   .info {
     width: 40px;
     height: 40px;
-    background-color: #fff; // Set your desired background color
+    background-color: #fff;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px; // Adjust as needed for rounded corners
-    color: #333; // Set your desired text color
+    border-radius: 5px;
+    color: #333;
     transition: all 0.3s ease-in-out;
 
     &:hover {
       background-color: #0034b9;
     }
   }
-
-  /*.settings {
-    background-image: url("../../../assets/img/settings.png");
-    background-size: cover;
-    background-position: center;
-  }*/
 }

@@ -8,7 +8,7 @@ Overall progress: 80%
 How to run the program:
 
 - Download files, open root folder in visual studio code, install mongoDB.
-- Install dependencies by running "npm install" through terminal for root folder and angular-app folder using bash.
+- Install dependencies by running "npm install" through terminal for root folder and angular-app folder using bash terminal.
 - Navigate to angular-app folder and build angular-app by running "ng build" through terminal (this creates dist folder on root with built client).
-- Add arduino with rfid reader to COM4 port and install rfidread.ino program to it from arduino folder.
-- In root folder run "npm run electron" to launch the application.
+- Add arduino uno R3 with rfid reader PN532 to COM4 port and install rfidread.ino program to it from arduino folder.
+- In root folder run "npm run electron" to launch the application or run "npm run build" to make application executable(creates desktop folder).

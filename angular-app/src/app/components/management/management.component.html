@@ -2,7 +2,7 @@
   <!-- User Section -->
   <div class="users">
     <div class="user-header">
-      <h2>Käyttäjät</h2>
+      <h3>Käyttäjät järjestelmässä</h3>
     </div>
     <div class="user-content">
       <ul>
@@ -20,17 +20,35 @@
   <!-- Item Section -->
   <div class="items">
     <div class="item-header">
-      <h2>Tavarat</h2>
+      <h3>Työkalut järjestelmässä</h3>
     </div>
     <div class="item-content">
       <ul>
         <li *ngFor="let item of items">
-          {{ item.itemname }}
+          {{ item.itemname }} - {{ item.location }}
           <button (click)="deleteItem(item._id)">Poista</button>
         </li>
       </ul>
     </div>
     <div class="item-button" routerLink="/add-item">
+      <p>Lisää uusi</p>
+    </div>
+  </div>
+
+  <!-- Location Section -->
+  <div class="locations">
+    <div class="location-header">
+      <h3>Työkalujen käyttöpaikat</h3>
+    </div>
+    <div class="location-content">
+      <ul>
+        <li *ngFor="let location of locations">
+          {{ location.name }}
+          <button (click)="deleteLocation(location._id)">Poista</button>
+        </li>
+      </ul>
+    </div>
+    <div class="location-button" routerLink="/add-location">
       <p>Lisää uusi</p>
     </div>
   </div>

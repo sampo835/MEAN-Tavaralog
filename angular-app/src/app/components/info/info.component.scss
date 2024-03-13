@@ -1,36 +1,65 @@
-
-
-.info {
-    display: flex;
-    flex-direction: column;
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px);
 }
 
-.top-left-button {
-    text-align: left;
-    margin-bottom: 10px; /* Add margin between button and text areas */
+.container {
+  margin: auto;
+  max-width: 1500px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "ins abo"
+    "ins aut";
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .back-button {
-    padding: 10px;
-    background-color: #007bff;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.instructions,
+.about,
+.authors {
+  background-color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  .header {
+    background-color: #333;
     color: #fff;
-    border: none;
-    cursor: pointer;
+    padding: 5px;
+    padding-left: 15px;
+  }
+
+  h4,
+  p {
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
-.text-areas {
-    display: flex;
-    justify-content: space-between;
+.instructions {
+  grid-area: ins;
 }
 
-.left-text-area,
-.right-text-area {
-    width: 48%; /* Adjust the width as needed, leaving some space for margin */
+.about {
+  grid-area: abo;
+  height: 100%; /* Set height to 100% */
 }
 
-.left-text-area p,
-.right-text-area p {
-    margin: 0; /* Remove default margin for paragraphs */
+.authors {
+  grid-area: aut;
+  height: 100%; /* Set height to 100% */
 }
-
-/* Add any additional styling as needed */

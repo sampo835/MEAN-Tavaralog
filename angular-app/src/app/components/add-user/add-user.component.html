@@ -1,26 +1,26 @@
 <div *ngIf="showForm">
   <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
     <!-- Your form fields here -->
-    <label for="username">Username:</label>
+    <label for="username">Anna nimi:</label>
     <input type="text" id="username" formControlName="username" />
 
-    <label for="role">Role:</label>
+    <label for="role">Valitse rooli:</label>
     <select id="role" formControlName="role">
       <option value="admin">Opettaja</option>
       <option value="regular">Oppilas</option>
     </select>
 
-    <label for="group">Group:</label>
+    <label for="group">Lisää ryhmä:</label>
     <input type="text" id="group" formControlName="group" />
 
-    <button type="submit">Continue</button>
+    <button type="submit">Jatka</button>
   </form>
 </div>
 
 <div *ngIf="showScanTag">
-  <p>Scan user tag...</p>
+  <p>Skannaa vielä tägi</p>
 </div>
 
 <div *ngIf="showSuccessMessage">
-  <p>User added successfully!</p>
+  <p>Uusi käyttäjä lisätty!</p>
 </div>

@@ -8,6 +8,9 @@ const serverPort = 3000;
 // Start the server
 startServer(serverPort);
 
+// Variable to store the SerialPort instance
+let arduinoPort;
+
 // Create main window for the app
 let mainWindow;
 
@@ -37,8 +40,9 @@ function createWindow() {
     mainWindow.webContents.send("rfidData", data);
   });
 
+  // Window closing
   mainWindow.on("closed", function () {
-    port.close(); // Close RFID read
+    port.close(); // Close RFID reading
     mainWindow = null; // Close window
   });
 }

@@ -1,0 +1,15 @@
+<div *ngIf="showForm">
+  <form [formGroup]="addLocationForm" (ngSubmit)="onSubmit()">
+    <!-- Location Details Form Fields (name, etc.) -->
+    <label for="name">Anna paikan nimi:</label>
+    <input type="text" formControlName="name" />
+
+    <!-- Other Form Fields -->
+
+    <button type="submit">Lisää</button>
+  </form>
+</div>
+
+<div *ngIf="showSuccessMessage">
+  <p>Paikka lisätty!</p>
+</div>

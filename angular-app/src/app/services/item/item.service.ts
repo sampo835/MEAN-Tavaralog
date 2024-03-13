@@ -33,27 +33,25 @@ export class ItemService {
     return this.http.get<any[]>(`${this.apiUrl}/get-loaned-items`);
   }
 
-  loanItem(itemRfidTag: string, userRfidTag: string): Observable<any> {
-    // Remove leading and trailing whitespace characters
+  loanItem(
+    itemRfidTag: string,
+    userRfidTag: string,
+    location: string
+  ): Observable<any> {
     const trimmedItemRfidTag = itemRfidTag.trim();
     const trimmedUserRfidTag = userRfidTag.trim();
 
     const body = {
       itemRfidTag: trimmedItemRfidTag,
       userRfidTag: trimmedUserRfidTag,
+      location: location,
     };
 
     return this.http.put(`${this.apiUrl}/loan-item`, body);
   }
 
-  /*returnItem(rfidTag: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/return/${rfidTag}`, null);
-  }*/
-
   returnItem(rfidTag: string): Observable<any> {
-    // Remove leading and trailing whitespace characters
     const trimmedRfidTag = rfidTag.trim();
-    console.log('Trimmed RFID Tag in Service:', trimmedRfidTag);
 
     return this.http.put(`${this.apiUrl}/return/${trimmedRfidTag}`, null);
   }

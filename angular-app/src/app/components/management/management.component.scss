@@ -1,7 +1,3 @@
-/* {
-  border: 1px #ffff00 solid;
-}*/
-
 :host {
   display: flex;
   flex-direction: column;
@@ -12,42 +8,48 @@
   margin: auto;
   max-width: 1500px;
   display: grid;
-  grid-template-columns: repeat(2, 600px); // Update this line
-  grid-template-areas: "us it";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "us us us us"
+    "it it lo lo";
   grid-gap: 20px;
   align-items: center;
   justify-content: center;
   text-align: center;
 
+  .users {
+    width: 1200px;
+  }
+
   .users,
-  .items {
-    //border-radius: 5px;
-    //background-color: #fff;
+  .items,
+  .locations {
     background-color: rgba(255, 255, 255, 0.5);
-    margin: 20px;
-    height: 400px;
-    //width: 600px;
+    //margin: 20px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
     .user-header,
-    .item-header {
-      h2 {
-        //margin-bottom: 10px;
+    .item-header,
+    .location-header {
+      h2,
+      h3 {
         background-color: #333;
         color: #fff;
+        text-align: left;
+        padding: 5px;
       }
     }
 
     .user-content,
-    .item-content {
-      //border: 2px solid #bd2130;
+    .item-content,
+    .location-content {
       flex: 1;
       padding: 10px;
 
       ul {
-        //border: 2px solid #bd21b5;
         list-style: none;
         padding: 0;
         overflow-y: auto;
@@ -78,40 +80,47 @@
     }
 
     .user-button,
-    .item-button {
-      background-color: #0056b3;
-      //border-radius: 10px;
+    .item-button,
+    .location-button {
+      background-color: #ffffff;
       margin-bottom: 10px;
       margin-top: 10px;
+      border-radius: 5px;
       height: 40px;
-      width: 200px;
+      width: 150px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: auto;
+      //margin-left: auto;
+      margin-left: 20px;
       margin-right: auto;
       cursor: pointer;
 
       &:hover {
-        background-color: #0034b9;
+        background-color: #dfdfdf;
       }
     }
   }
 
   .users {
     grid-area: us;
-    width: 600px;
   }
 
   .items {
-    width: 600px;
     grid-area: it;
   }
+
+  .locations {
+    // Add styles for the locations section
+    grid-area: lo;
+  }
 }
+
 .back-button {
   position: absolute;
-  bottom: 10px; /* Adjust the distance from the bottom */
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px 20px; /* Add padding as needed */
+  padding: 10px 20px;
+  cursor: pointer;
 }

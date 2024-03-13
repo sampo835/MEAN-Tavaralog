@@ -96,7 +96,7 @@ router.get("/get-loaned-items", async (req, res) => {
 
 //----------------------------------------------------------------------//
 
-// Route to loan an item by providing both user and item RFID tags
+/*/ Route to loan an item by providing both user and item RFID tags
 router.put("/loan-item", async (req, res) => {
   const { itemRfidTag, userRfidTag } = req.body;
 
@@ -118,6 +118,49 @@ router.put("/loan-item", async (req, res) => {
 
     // Update the item's loan status
     item.isLoaned = true;
+
+    // Associate the user ObjectId with the loaner field
+    const user = await User.findOne({ rfidTag: userRfidTag });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    item.loaner = user._id;
+
+    // Save the updated item
+    await item.save();
+
+    res.status(200).json({ message: "Item loaned successfully", item });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});*/
+
+// Route to loan an item by providing both user and item RFID tags, including location
+router.put("/loan-item", async (req, res) => {
+  const { itemRfidTag, userRfidTag, location } = req.body;
+
+  console.log("Received Item RFID Tag:", itemRfidTag);
+  console.log("Received User RFID Tag:", userRfidTag);
+  console.log("Received Location:", location);
+
+  try {
+    // Find the item by item RFID tag
+    const item = await Item.findOne({ rfidTag: itemRfidTag });
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    // Check if the item is already loaned
+    if (item.isLoaned) {
+      return res.status(400).json({ message: "Item is already loaned" });
+    }
+
+    // Update the item's loan status and location
+    item.isLoaned = true;
+    item.location = location; // Assuming you have a 'location' field in your item model
 
     // Associate the user ObjectId with the loaner field
     const user = await User.findOne({ rfidTag: userRfidTag });
