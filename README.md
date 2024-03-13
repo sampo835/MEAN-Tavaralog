@@ -8,6 +8,8 @@ Overall progress: 80%
 Problems:
 
 - When loaning item the choose location doesnt work properly.
+- Some pages look like crap.
+- Error cases needs to be tested.
 
 How to run the program:
 
