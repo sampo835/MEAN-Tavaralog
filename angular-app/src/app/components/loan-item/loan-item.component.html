@@ -1,5 +1,17 @@
 <div class="text">{{ displayMessage }}</div>
+
 <div class="container" *ngIf="isLoading">
-  <div class="line-animation" *ngIf="isLoading"></div>
+  <div class="line-animation"></div>
 </div>
+
+<div class="location-selection" *ngIf="showLocationDropdown">
+  <label for="locationSelect">Valitse sijainti:</label>
+  <select id="locationSelect" [(ngModel)]="location">
+    <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+  </select>
+  <button class="confirm-location-button" (click)="confirmLocation()">
+    Vahvista sijainti
+  </button>
+</div>
+
 <button class="back-button" routerLink="/">PALAA PÄÄVALIKKOON</button>

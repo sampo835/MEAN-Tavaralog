@@ -32,7 +32,7 @@ router.post("/add-location", async (req, res) => {
   }
 });
 
-// Delete a location
+// Route to delete a location
 router.delete("/delete-location/:locationId", async (req, res) => {
   const locationId = req.params.locationId;
 
@@ -50,7 +50,7 @@ router.delete("/delete-location/:locationId", async (req, res) => {
   }
 });
 
-// Get all locations
+// Route to get all locations
 router.get("/get-locations", async (req, res) => {
   try {
     const locations = await Location.find();

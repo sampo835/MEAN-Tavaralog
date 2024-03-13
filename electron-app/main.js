@@ -8,9 +8,6 @@ const serverPort = 3000;
 // Start the server
 startServer(serverPort);
 
-// Variable to store the SerialPort instance
-let arduinoPort;
-
 // Create main window for the app
 let mainWindow;
 

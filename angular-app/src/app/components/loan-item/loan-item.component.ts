@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { RfidService } from '../../services/rfid/rfid.service';
 import { UserService } from '../../services/user/user.service';
 import { ItemService } from '../../services/item/item.service';
+import { LocationService } from '../../services/location/location.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,47 +23,47 @@ export class LoanItemComponent implements OnInit, OnDestroy {
   enteredItemRfidTag: string = '';
   isIdentificationPhase: boolean = true;
   isScanItemPhase: boolean = false;
-  isChooseLocationPhase: boolean = false; // Added flag for choose location step
+  isChooseLocationPhase: boolean = false;
+  isLoanItemPhase: boolean = false; // Added flag for loan item phase
   isLoanSuccessPhase: boolean = false;
-  isLoading: boolean = true; // Show waiting animation initially
+  isLoading: boolean = true;
   displayMessage: string = 'Tunnistaudu';
   private rfidSubscription: Subscription | undefined;
-  location: string = ''; // Property to store the chosen location
+  location: string = '';
+  locations: string[] = []; // Array to store locations
+  showLocationDropdown: boolean = true;
 
   constructor(
     private rfidService: RfidService,
     private userService: UserService,
     private itemService: ItemService,
+    private locationService: LocationService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to RFID data
     this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
       if (this.isIdentificationPhase) {
         this.enteredUserRfidTag = data;
 
-        // Check if the user with the provided RFID tag exists
         this.userService.checkUser(this.enteredUserRfidTag).subscribe(
           (userResponse) => {
             if (userResponse.userExists) {
               this.isIdentificationPhase = false;
               this.isScanItemPhase = true;
-              this.isLoading = false; // Hide waiting animation
+              //this.isLoading = false;
               this.displayMessage = 'Skannaa tavara';
-              this.cdr.detectChanges(); // Trigger change detection
+              this.cdr.detectChanges();
             } else {
-              // User does not exist
               this.isIdentificationPhase = false;
               this.isScanItemPhase = false;
               this.isChooseLocationPhase = false;
               this.isLoanSuccessPhase = false;
-              this.isLoading = false; // Hide waiting animation
+              this.isLoading = false;
               this.displayMessage = 'Käyttäjää ei löydy';
-              this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+              this.cdr.detectChanges();
 
-              // Add a 2-second delay before redirecting to the root route
               setTimeout(() => {
                 this.router.navigate(['']);
               }, 2000);
@@ -71,7 +72,6 @@ export class LoanItemComponent implements OnInit, OnDestroy {
           (userError) => {
             console.error('Error checking user:', userError);
 
-            // Add a 2-second delay before redirecting to the root route
             setTimeout(() => {
               this.router.navigate(['']);
             }, 2000);
@@ -79,90 +79,86 @@ export class LoanItemComponent implements OnInit, OnDestroy {
         );
       } else if (this.isScanItemPhase) {
         this.enteredItemRfidTag = data;
-        this.isLoading = true; // Show waiting animation before loaning
-        this.cdr.detectChanges(); // Trigger change detection after updating isLoading
+        //this.isLoading = true;
+        this.cdr.detectChanges();
 
-        // Continue with item loan logic...
         this.itemService.checkItem(this.enteredItemRfidTag).subscribe(
           (itemResponse) => {
             if (itemResponse.itemExists && !itemResponse.isLoaned) {
-              // Item exists and is not loaned, move to choose location phase
               this.isScanItemPhase = false;
               this.isChooseLocationPhase = true;
-              this.isLoading = false; // Hide waiting animation
+              this.isLoading = false;
               this.displayMessage = 'Valitse lainapaikka';
-              this.cdr.detectChanges(); // Trigger change detection
-
-              // You may update the template to display location options and capture the user's choice.
+              this.cdr.detectChanges();
             } else {
-              // Item does not exist or is already loaned
-              this.isLoading = false; // Hide waiting animation
+              this.isLoading = false;
               this.isLoanSuccessPhase = false;
               this.displayMessage = 'Tavaraa ei voi lainata';
-              this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
+              this.cdr.detectChanges();
 
-              // Add a 2-second delay before redirecting to the root route
               setTimeout(() => {
                 this.router.navigate(['']);
-                this.cdr.detectChanges(); // Trigger change detection after redirect
+                this.cdr.detectChanges();
               }, 2000);
             }
           },
           (itemError) => {
             console.error('Error checking item:', itemError);
 
-            // Add a 2-second delay before redirecting to the root route
             setTimeout(() => {
               this.router.navigate(['']);
-              this.cdr.detectChanges(); // Trigger change detection after redirect
+              this.cdr.detectChanges();
             }, 2000);
           }
         );
       } else if (this.isChooseLocationPhase) {
-        // Handle choose location logic
-        this.location = data; // Assuming data is the chosen location
-        this.isChooseLocationPhase = false; // Reset the phase
-        this.isLoading = true; // Show waiting animation before loaning
-        this.cdr.detectChanges(); // Trigger change detection after updating isLoading
-
-        // Continue with item loan logic...
-        this.itemService
-          .loanItem(
-            this.enteredItemRfidTag,
-            this.enteredUserRfidTag,
-            this.location
-          )
-          .subscribe(
-            (loanResponse) => {
-              this.isLoading = false; // Hide waiting animation after loaning
-              this.isLoanSuccessPhase = true;
-              this.displayMessage = 'Tavara lainattu!';
-              this.cdr.detectChanges(); // Trigger change detection after updating displayMessage
-
-              setTimeout(() => {
-                this.router.navigate(['']);
-              }, 3000);
-            },
-            (loanError) => {
-              console.error('Error loaning item:', loanError);
-
-              // Add a 2-second delay before redirecting to the root route
-              setTimeout(() => {
-                this.router.navigate(['']);
-              }, 2000);
-            },
-            () => {
-              this.cdr.detectChanges(); // Trigger change detection after updating isLoading
-            }
-          );
+        this.locationService.getLocations().subscribe(
+          (locations: any[]) => {
+            this.locations = locations.map((location) => location.name);
+            this.showLocationDropdown = true;
+            // Remove transition to loan item phase here
+            this.isLoading = false;
+            this.displayMessage = 'Valitse lainattava tavara';
+            this.cdr.detectChanges();
+          },
+          (error) => {
+            console.error('Error retrieving locations:', error);
+            this.router.navigate(['']);
+          }
+        );
       }
     });
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from the RFID data subscription to prevent memory leaks
     if (this.rfidSubscription) {
       this.rfidSubscription.unsubscribe();
     }
+  }
+
+  confirmLocation(): void {
+    this.isChooseLocationPhase = false;
+    this.isLoanItemPhase = true;
+    this.cdr.detectChanges();
+
+    this.itemService
+      .loanItem(this.enteredItemRfidTag, this.enteredUserRfidTag, this.location)
+      .subscribe(
+        (loanResponse) => {
+          this.isLoading = false;
+          this.showLocationDropdown = false;
+          this.isLoanSuccessPhase = true;
+          this.displayMessage = 'Tavara lainattu!';
+          this.cdr.detectChanges();
+
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 3000);
+        },
+        (loanError) => {
+          console.error('Error loaning item:', loanError);
+          this.router.navigate(['']);
+        }
+      );
   }
 }

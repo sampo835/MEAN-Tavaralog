@@ -5,6 +5,10 @@ PROGRAM IS UNDER DEVELOPMENT!!
 
 Overall progress: 80%
 
+Problems:
+
+- When loaning item the choose location doesnt work properly.
+
 How to run the program:
 
 - Download files, open root folder in visual studio code, install mongoDB.
