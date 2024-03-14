@@ -24,7 +24,7 @@ KNOWN PROBLEMS:
   ( make mobile.scss file and import it to global styles. )
 
 - When program is launched the first time and theres no admin in database.
-- ( make add-admin component and make it appear on launch if there's nobody in database.)
+  ( make add-admin component and make it appear on launch if there's nobody in database.)
 
 HOW TO RUN THE PROGRAM:
 
