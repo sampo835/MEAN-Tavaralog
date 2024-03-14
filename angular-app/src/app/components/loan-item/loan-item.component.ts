@@ -19,19 +19,28 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoanItemComponent implements OnInit, OnDestroy {
+  // Store strings
   enteredUserRfidTag: string = '';
   enteredItemRfidTag: string = '';
+  chosenLocation: string = '';
+  locations: string[] = [];
+  displayMessage: string = 'Vaihe 1. Tunnistaudu';
+
+  // Loaning phases
   isIdentificationPhase: boolean = true;
   isScanItemPhase: boolean = false;
   isChooseLocationPhase: boolean = false;
-  isLoanItemPhase: boolean = false; // Added flag for loan item phase
+  isLoanItemPhase: boolean = false;
   isLoanSuccessPhase: boolean = false;
+
+  // Scan animation
   isLoading: boolean = true;
-  displayMessage: string = 'Tunnistaudu';
+
+  // Choose location menu
+  showLocationDropdown: boolean = false;
+
+  // Rfid read
   private rfidSubscription: Subscription | undefined;
-  location: string = '';
-  locations: string[] = []; // Array to store locations
-  showLocationDropdown: boolean = true;
 
   constructor(
     private rfidService: RfidService,
@@ -43,6 +52,7 @@ export class LoanItemComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.fetchLocations();
     this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
       if (this.isIdentificationPhase) {
         this.enteredUserRfidTag = data;
@@ -52,8 +62,8 @@ export class LoanItemComponent implements OnInit, OnDestroy {
             if (userResponse.userExists) {
               this.isIdentificationPhase = false;
               this.isScanItemPhase = true;
-              //this.isLoading = false;
-              this.displayMessage = 'Skannaa tavara';
+              this.isLoading = true;
+              this.displayMessage = 'Vaihe 2. Skannaa tavara';
               this.cdr.detectChanges();
             } else {
               this.isIdentificationPhase = false;
@@ -88,7 +98,8 @@ export class LoanItemComponent implements OnInit, OnDestroy {
               this.isScanItemPhase = false;
               this.isChooseLocationPhase = true;
               this.isLoading = false;
-              this.displayMessage = 'Valitse lainapaikka';
+              this.displayMessage = 'Vaihe 3: Valitse paikka';
+              this.showLocationDropdown = true;
               this.cdr.detectChanges();
             } else {
               this.isLoading = false;
@@ -112,20 +123,9 @@ export class LoanItemComponent implements OnInit, OnDestroy {
           }
         );
       } else if (this.isChooseLocationPhase) {
-        this.locationService.getLocations().subscribe(
-          (locations: any[]) => {
-            this.locations = locations.map((location) => location.name);
-            this.showLocationDropdown = true;
-            // Remove transition to loan item phase here
-            this.isLoading = false;
-            this.displayMessage = 'Valitse lainattava tavara';
-            this.cdr.detectChanges();
-          },
-          (error) => {
-            console.error('Error retrieving locations:', error);
-            this.router.navigate(['']);
-          }
-        );
+        this.isLoading = false;
+        this.displayMessage = 'Tavara lainattu';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -142,7 +142,11 @@ export class LoanItemComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
 
     this.itemService
-      .loanItem(this.enteredItemRfidTag, this.enteredUserRfidTag, this.location)
+      .loanItem(
+        this.enteredItemRfidTag,
+        this.enteredUserRfidTag,
+        this.chosenLocation
+      )
       .subscribe(
         (loanResponse) => {
           this.isLoading = false;
@@ -160,5 +164,22 @@ export class LoanItemComponent implements OnInit, OnDestroy {
           this.router.navigate(['']);
         }
       );
+  }
+
+  selectLocation(location: string): void {
+    this.chosenLocation = location;
+    this.confirmLocation(); // Optionally, you can automatically proceed after selecting a location
+  }
+
+  fetchLocations(): void {
+    this.locationService.getLocations().subscribe(
+      (locations: any[]) => {
+        this.locations = locations.map((location) => location.name);
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        console.error('Error fetching locations:', error);
+      }
+    );
   }
 }

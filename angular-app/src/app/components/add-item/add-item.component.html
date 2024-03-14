@@ -1,21 +1,19 @@
-<!-- add-item.component.html -->
-
 <div *ngIf="showForm">
   <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
     <!-- Item Details Form Fields (itemname, etc.) -->
-    <label for="itemname">Item Name:</label>
+    <label for="itemname">Tavaran nimi:</label>
     <input type="text" formControlName="itemname" />
 
     <!-- Other Form Fields -->
 
-    <button type="submit">Continue</button>
+    <button type="submit">Jatka</button>
   </form>
 </div>
 
-<div *ngIf="showScanTag">
-  <p>Scan the item's RFID tag...</p>
+<div class="message" *ngIf="showScanTag">
+  <p>Skannaa uusi tavara</p>
 </div>
 
-<div *ngIf="showSuccessMessage">
-  <p>Item added successfully!</p>
+<div class="message" *ngIf="showSuccessMessage">
+  <p>Uusi tavara luotu!</p>
 </div>
