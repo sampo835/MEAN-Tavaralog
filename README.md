@@ -3,10 +3,10 @@ This project is tool loaning system made for sedu's talotekniikka unit.
 
 PROGRAM IS UNDER DEVELOPMENT!!
 
-[x] Planning
-[x] Development
-[ ] Testing
-[ ] Bug fixes
+[x] Planning  
+[x] Development  
+[ ] Testing  
+[ ] Bug fixes  
 [ ] Launch
 
 KNOWN PROBLEMS:
