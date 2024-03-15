@@ -26,6 +26,8 @@ KNOWN PROBLEMS:
 - When program is launched the first time and theres no admin in database.
   ( make add-admin component and make it appear on launch if there's nobody in database.)
 
+- Somehow it doesnt recognize but only one admin.
+
 HOW TO RUN THE PROGRAM:
 
 - Install MongoDb.
