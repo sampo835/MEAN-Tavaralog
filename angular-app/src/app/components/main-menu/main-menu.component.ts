@@ -1,7 +1,7 @@
-// main-menu.component.ts
-
 import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
-import { ItemService } from '../../services/item/item.service';
+//import { ItemService } from '../../services/item/item.service';
+import { UserService } from '../../services/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-menu',
@@ -12,16 +12,26 @@ export class MainMenuComponent implements OnInit {
   loanedItems: any[] = [];
 
   constructor(
-    private itemService: ItemService,
+    private userService: UserService,
+    //private itemService: ItemService,
     private zone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadLoanedItems();
+    this.userService.getUsers().subscribe((users) => {
+      if (users.length === 0) {
+        this.router.navigate(['/add-first-user']);
+      }
+    });
   }
 
-  loadLoanedItems() {
+  /*ngOnInit(): void {
+    //this.loadLoanedItems();
+  }*/
+
+  /*loadLoanedItems() {
     this.itemService.getLoanedItems().subscribe(
       (data) => {
         this.zone.run(() => {
@@ -34,5 +44,5 @@ export class MainMenuComponent implements OnInit {
         console.error('Error fetching loaned items:', error);
       }
     );
-  }
+  }*/
 }

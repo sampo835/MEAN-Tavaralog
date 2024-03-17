@@ -30,16 +30,16 @@
 .instructions,
 .about,
 .authors {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   text-align: left;
+  border-radius: 10px;
 
   .header {
-    background-color: #333;
-    color: #fff;
+    //background-color: #000;
+    //color: #fff;
     padding: 5px;
-    padding-left: 15px;
   }
 
   h4,

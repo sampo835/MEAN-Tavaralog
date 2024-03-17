@@ -62,6 +62,7 @@ export class AddItemComponent implements OnInit {
   }
 
   onTagScanned(rfidTag: string) {
+    rfidTag = rfidTag.trim();
     const itemData = this.addItemForm.value;
     itemData.rfidTag = rfidTag;
 

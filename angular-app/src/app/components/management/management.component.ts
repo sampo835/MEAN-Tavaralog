@@ -12,6 +12,7 @@ export class ManagementComponent implements OnInit {
   users: any[] = [];
   items: any[] = [];
   locations: any[] = [];
+  loanedItems: any[] = [];
 
   constructor(
     private userService: UserService,
@@ -23,6 +24,7 @@ export class ManagementComponent implements OnInit {
     this.fetchUsers();
     this.fetchItems();
     this.fetchLocations();
+    this.loadLoanedItems();
   }
 
   deleteUser(userId: string): void {
@@ -90,6 +92,17 @@ export class ManagementComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching locations:', error);
+      }
+    );
+  }
+
+  private loadLoanedItems() {
+    this.itemService.getLoanedItems().subscribe(
+      (loanedItems: any[]) => {
+        this.loanedItems = loanedItems;
+      },
+      (error: any) => {
+        console.error('Error fetching loaned items:', error);
       }
     );
   }

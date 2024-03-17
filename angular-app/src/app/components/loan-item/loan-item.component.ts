@@ -24,17 +24,16 @@ export class LoanItemComponent implements OnInit, OnDestroy {
   enteredItemRfidTag: string = '';
   chosenLocation: string = '';
   locations: string[] = [];
-  displayMessage: string = 'Vaihe 1. Tunnistaudu';
+  displayMessage: string = '';
 
   // Loaning phases
   isIdentificationPhase: boolean = true;
   isScanItemPhase: boolean = false;
   isChooseLocationPhase: boolean = false;
-  isLoanItemPhase: boolean = false;
   isLoanSuccessPhase: boolean = false;
 
-  // Scan animation
-  isLoading: boolean = true;
+  // Loading animation
+  isLoading: boolean = false;
 
   // Choose location menu
   showLocationDropdown: boolean = false;
@@ -53,92 +52,106 @@ export class LoanItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchLocations();
+    this.setPhaseMessage();
     this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
-      if (this.isIdentificationPhase) {
-        this.enteredUserRfidTag = data;
+      // WHEN TAG IS SCANNED
+      this.displayMessage = 'Luku onnistui, tarkistetaan..';
+      this.isLoading = true;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        // USER SCAN PHASE
+        if (this.isIdentificationPhase) {
+          this.enteredUserRfidTag = data;
+          this.isLoading = true;
 
-        this.userService.checkUser(this.enteredUserRfidTag).subscribe(
-          (userResponse) => {
-            if (userResponse.userExists) {
-              this.isIdentificationPhase = false;
-              this.isScanItemPhase = true;
-              this.isLoading = true;
-              this.displayMessage = 'Vaihe 2. Skannaa tavara';
-              this.cdr.detectChanges();
-            } else {
-              this.isIdentificationPhase = false;
-              this.isScanItemPhase = false;
-              this.isChooseLocationPhase = false;
-              this.isLoanSuccessPhase = false;
+          this.userService.checkUser(this.enteredUserRfidTag).subscribe(
+            (response) => {
               this.isLoading = false;
-              this.displayMessage = 'Käyttäjää ei löydy';
+              if (response.userExists) {
+                //this.isIdentificationPhase = false;
+                //this.isScanItemPhase = true;
+                this.displayMessage = 'Käyttäjä löytyi';
+                setTimeout(() => {
+                  this.isIdentificationPhase = false;
+                  this.isScanItemPhase = true;
+                  this.setPhaseMessage();
+                  this.cdr.detectChanges();
+                }, 2000);
+              } else {
+                this.isIdentificationPhase = false;
+                this.displayMessage = 'Käyttäjää ei löydy';
+              }
               this.cdr.detectChanges();
+            },
+            (error) => {
+              this.isLoading = false;
+              if (error.status === 404) {
+                this.isIdentificationPhase = false;
+                this.displayMessage = 'Käyttäjää ei löydy';
+              } else {
+                console.error('Error checking user:', error);
+                setTimeout(() => {
+                  this.router.navigate(['']);
+                }, 2000);
+              }
+              this.cdr.detectChanges();
+            }
+          );
+        }
+        // ITEM SCAN PHASE
+        else if (this.isScanItemPhase) {
+          this.enteredItemRfidTag = data;
+          this.isLoading = true;
 
+          this.itemService.checkItem(this.enteredItemRfidTag).subscribe(
+            (itemResponse) => {
+              this.isLoading = false;
+              if (itemResponse.itemExists && !itemResponse.isLoaned) {
+                this.isScanItemPhase = false;
+                this.isChooseLocationPhase = true;
+                this.displayMessage = 'Tavaran voi lainata';
+                setTimeout(() => {
+                  this.isScanItemPhase = false;
+                  this.isChooseLocationPhase = true;
+                  this.showLocationDropdown = true;
+                  this.setPhaseMessage();
+                  this.cdr.detectChanges();
+                }, 2000);
+              } else {
+                this.displayMessage = 'Tavaraa ei voi lainata';
+                setTimeout(() => {
+                  this.router.navigate(['']);
+                }, 2000);
+              }
+              this.cdr.detectChanges();
+            },
+            (itemError) => {
+              console.error('Error checking item:', itemError);
               setTimeout(() => {
                 this.router.navigate(['']);
               }, 2000);
             }
-          },
-          (userError) => {
-            console.error('Error checking user:', userError);
-
-            setTimeout(() => {
-              this.router.navigate(['']);
-            }, 2000);
-          }
-        );
-      } else if (this.isScanItemPhase) {
-        this.enteredItemRfidTag = data;
-        //this.isLoading = true;
-        this.cdr.detectChanges();
-
-        this.itemService.checkItem(this.enteredItemRfidTag).subscribe(
-          (itemResponse) => {
-            if (itemResponse.itemExists && !itemResponse.isLoaned) {
-              this.isScanItemPhase = false;
-              this.isChooseLocationPhase = true;
-              this.isLoading = false;
-              this.displayMessage = 'Vaihe 3: Valitse paikka';
-              this.showLocationDropdown = true;
-              this.cdr.detectChanges();
-            } else {
-              this.isLoading = false;
-              this.isLoanSuccessPhase = false;
-              this.displayMessage = 'Tavaraa ei voi lainata';
-              this.cdr.detectChanges();
-
-              setTimeout(() => {
-                this.router.navigate(['']);
-                this.cdr.detectChanges();
-              }, 2000);
-            }
-          },
-          (itemError) => {
-            console.error('Error checking item:', itemError);
-
-            setTimeout(() => {
-              this.router.navigate(['']);
-              this.cdr.detectChanges();
-            }, 2000);
-          }
-        );
-      } else if (this.isChooseLocationPhase) {
-        this.isLoading = false;
-        this.displayMessage = 'Tavara lainattu';
-        this.cdr.detectChanges();
-      }
+          );
+        }
+        // CHOOSE LOCATION PHASE
+        else if (this.isChooseLocationPhase) {
+          this.cdr.detectChanges();
+        }
+      }, 2000);
     });
   }
 
+  // WHEN LEAVING COMPONENT
   ngOnDestroy(): void {
     if (this.rfidSubscription) {
       this.rfidSubscription.unsubscribe();
     }
   }
 
-  confirmLocation(): void {
+  // SELECT LOCATION
+  selectLocation(location: string): void {
+    this.chosenLocation = location;
     this.isChooseLocationPhase = false;
-    this.isLoanItemPhase = true;
     this.cdr.detectChanges();
 
     this.itemService
@@ -149,10 +162,9 @@ export class LoanItemComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (loanResponse) => {
-          this.isLoading = false;
           this.showLocationDropdown = false;
           this.isLoanSuccessPhase = true;
-          this.displayMessage = 'Tavara lainattu!';
+          this.setPhaseMessage();
           this.cdr.detectChanges();
 
           setTimeout(() => {
@@ -166,11 +178,7 @@ export class LoanItemComponent implements OnInit, OnDestroy {
       );
   }
 
-  selectLocation(location: string): void {
-    this.chosenLocation = location;
-    this.confirmLocation(); // Optionally, you can automatically proceed after selecting a location
-  }
-
+  // GET LOCATIONS FROM DATABASE
   fetchLocations(): void {
     this.locationService.getLocations().subscribe(
       (locations: any[]) => {
@@ -181,5 +189,21 @@ export class LoanItemComponent implements OnInit, OnDestroy {
         console.error('Error fetching locations:', error);
       }
     );
+  }
+
+  // SET MESSAGE
+  setPhaseMessage(): void {
+    if (this.isIdentificationPhase) {
+      this.displayMessage = 'Vaihe 1. Tunnistaudu';
+    } else if (this.isScanItemPhase) {
+      this.displayMessage = 'Vaihe 2. Skannaa tavara';
+    } else if (this.isChooseLocationPhase) {
+      this.displayMessage = 'Vaihe 3: Valitse paikka';
+    } else if (this.isLoanSuccessPhase) {
+      this.displayMessage = 'Tavara lainattu';
+    } else {
+      // Default message if none of the phases are true
+      this.displayMessage = 'Tuntematon vaihe';
+    }
   }
 }

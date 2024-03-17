@@ -5,28 +5,23 @@ PROGRAM IS UNDER DEVELOPMENT!!
 
 [x] Planning  
 [x] Development  
-[ ] Testing  
-[ ] Bug fixes  
+[x] Testing  
+[x] Fixing  
 [ ] Launch
 
 KNOWN PROBLEMS:
 
 - Some pages look like crap.
-  ( make global styles and update class names. )
+  ( make global styles and update class names. )  
+  ( make everything look nice. )
 
 - Teacher must add group when adding himself to system.
-  ( hide group choice if teacher is chosen. )
+  ( hide group choice if teacher is chosen or something. )
 
-- Error cases needs to be tested proberly and corrected.
-  ( make demo version and testing environment in school. )
+- Correct error cases.
 
 - Theres no support for different screen sizes yet.
   ( make mobile.scss file and import it to global styles. )
-
-- When program is launched the first time and theres no admin in database.
-  ( make add-admin component and make it appear on launch if there's nobody in database.)
-
-- Somehow it doesnt recognize but only one admin.
 
 HOW TO RUN THE PROGRAM:
 

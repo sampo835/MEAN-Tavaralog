@@ -1,37 +1,21 @@
 <section class="container">
-  <div class="big-links">
-    <!--div class="heading">
-      <h2>Aloita tästä</h2>
-    </div-->
+  <div class="buttons">
     <div class="loan" routerLink="/loan-item">
-      <p>LAINAA</p>
-    </div>
-    <div class="text">
-      <p>TAI</p>
+      <p>LAINAA TYÖKALU <br />paina tästä</p>
     </div>
     <div class="return" routerLink="/return-item">
-      <p>PALAUTA</p>
-    </div>
-  </div>
-
-  <div class="loan-list">
-    <div class="loan-heading">
-      <h2>Lainauslista</h2>
-    </div>
-    <div class="loaned-items">
-      <div *ngIf="loanedItems.length > 0; else noItemsPlaceholder">
-        <div *ngFor="let item of loanedItems">
-          <p>
-            {{ item.itemname }} on lainassa henkilöllä
-            {{ item.loaner.username }} / {{ item.loaner.group }} paikassa
-            {{ item.location }}
-          </p>
-        </div>
-      </div>
-
-      <ng-template #noItemsPlaceholder>
-        <p>Ei tällä hetkellä tavaroita lainassa.</p>
-      </ng-template>
+      <p>PALAUTA TYÖKALU <br />paina tästä</p>
     </div>
   </div>
 </section>
+<div class="links">
+  <button class="settings" routerLink="/check-admin">
+    <p>HALLINTA</p>
+  </button>
+  <button class="info" routerLink="/info">
+    <p>OHJEET</p>
+  </button>
+  <button class="arduino" routerLink="/arduino">
+    <p>LUKIJA</p>
+  </button>
+</div>

@@ -1,15 +1,18 @@
-:host {
+header {
   display: block;
   height: 70px;
+  position: fixed;
+  top: 0;
+  width: 100%;
   //background-color: #333;
   color: white;
+  z-index: 9999;
 }
 
 header {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #000000;
   color: white;
 
   .logo-container {
@@ -36,7 +39,7 @@ header {
 
   .settings,
   .info {
-    width: 40px;
+    width: 120px;
     height: 40px;
     background-color: #fff;
     cursor: pointer;

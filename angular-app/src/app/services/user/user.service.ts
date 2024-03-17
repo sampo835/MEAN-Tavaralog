@@ -20,9 +20,6 @@ export class UserService {
   }
 
   getUsers(): Observable<any[]> {
-    // Implement this method based on your backend API
-    // This method should return an observable with the user data
-    // Make sure to handle error cases appropriately
     return this.http.get<any[]>(`${this.apiUrl}/get-users`);
   }
 

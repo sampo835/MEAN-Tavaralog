@@ -9,6 +9,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { AddItemComponent } from './components/add-item/add-item.component';
 import { CheckAdminComponent } from './components/check-admin/check-admin.component';
 import { AddLocationComponent } from './components/add-location/add-location.component';
+import { AddFirstUserComponent } from './components/add-first-user/add-first-user/add-first-user.component';
 
 const routes: Routes = [
   { path: '', component: MainMenuComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'add-item', component: AddItemComponent },
   { path: 'add-location', component: AddLocationComponent },
   { path: 'check-admin', component: CheckAdminComponent },
+  { path: 'add-first-user', component: AddFirstUserComponent },
 ];
 
 @NgModule({

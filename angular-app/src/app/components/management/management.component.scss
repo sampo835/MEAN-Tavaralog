@@ -6,46 +6,67 @@
 
 .container {
   margin: auto;
-  max-width: 1500px;
+  width: 1200px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
-    "us us us us"
-    "it it lo lo";
-  grid-gap: 20px;
+    "us us it"
+    "loa loa loc";
+  grid-gap: 10px;
   align-items: center;
   justify-content: center;
   text-align: center;
 
-  .users {
-    width: 1200px;
-  }
+  //.users {
+  //width: 600px;
+  //}
 
   .users,
   .items,
-  .locations {
-    background-color: rgba(255, 255, 255, 0.5);
+  .locations,
+  .loans {
+    background-color: #fff;
     //margin: 20px;
     height: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    //justify-content: space-between;
+    border: 3px #003873 solid;
+    border-radius: 10px;
 
     .user-header,
     .item-header,
-    .location-header {
+    .location-header,
+    .loan-header {
       h2,
       h3 {
-        background-color: #333;
-        color: #fff;
-        text-align: left;
-        padding: 5px;
+        background-color: #aaaaaa;
+        //color: #fff;
+        text-align: center;
+        padding-left: 5px;
       }
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    table th,
+    table td {
+      border: 1px solid #dcdcdc;
+      padding: 5px;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #f2f2f2;
     }
 
     .user-content,
     .item-content,
-    .location-content {
+    .location-content,
+    .loan-content {
       flex: 1;
       padding: 10px;
 
@@ -53,14 +74,15 @@
         list-style: none;
         padding: 0;
         overflow-y: auto;
-        max-height: 200px;
+        height: 200px;
+        //background-color: #bababa;
 
         li {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 10px;
-          border-bottom: 1px solid #ccc;
+          //margin-bottom: 5px;
+          border-bottom: 1px solid #000000;
 
           button {
             background-color: #dc3545;
@@ -76,6 +98,22 @@
             }
           }
         }
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table th,
+      table td {
+        border: 1px solid #000000;
+        padding: 5px;
+        text-align: left;
+      }
+
+      table th {
+        background-color: #f2f2f2;
       }
     }
 
@@ -111,8 +149,11 @@
   }
 
   .locations {
-    // Add styles for the locations section
-    grid-area: lo;
+    grid-area: loc;
+  }
+
+  .loans {
+    grid-area: loa;
   }
 }
 

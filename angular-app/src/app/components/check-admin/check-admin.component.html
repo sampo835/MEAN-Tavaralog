@@ -1,5 +1,7 @@
-<div class="text">{{ displayMessage }}</div>
-<div class="container" *ngIf="isLoading">
-  <div class="line-animation" *ngIf="isLoading"></div>
-</div>
+<section class="container">
+  <div class="message">{{ displayMessage }}</div>
+  <div class="line" *ngIf="isLoading">
+    <div class="line-animation" *ngIf="isLoading"></div>
+  </div>
+</section>
 <button class="back-button" routerLink="/">PALAA PÄÄVALIKKOON</button>

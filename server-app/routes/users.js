@@ -70,25 +70,20 @@ router.get("/get-users", async (req, res) => {
   }
 });
 
-// Route to check if a user with a specific RFID tag exists
+// Check if user exists
 router.get("/check-user/:rfidTag", async (req, res) => {
   try {
-    // Extract RFID tag from the request parameters
     const rfidTag = req.params.rfidTag;
-
-    // Use Mongoose's findOne to find the user by RFID tag
     const user = await User.findOne({ rfidTag });
 
     if (user) {
-      res.status(200).json({ userExists: true });
+      res.status(200).json({ userExists: true }); // User exists
     } else {
-      // Respond with a not found message if user not found
-      res.status(404).json({ userExists: false });
+      res.status(404).json({ userExists: false }); // User does not exist
     }
   } catch (error) {
-    // Handle errors
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" }); // Internal server error
   }
 });
 

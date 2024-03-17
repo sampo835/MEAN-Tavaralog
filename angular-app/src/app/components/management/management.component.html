@@ -2,30 +2,70 @@
   <!-- User Section -->
   <div class="users">
     <div class="user-header">
-      <h3>Käyttäjät järjestelmässä</h3>
+      <h3>KÄYTTÄJÄT</h3>
     </div>
-    <div class="user-content">
-      <ul>
+    <!--div class="user-content"-->
+    <!--ul>
         <li *ngFor="let user of users">
           {{ user.username }} - {{ user.role }} - {{ user.group }}
           <button (click)="deleteUser(user._id)">Poista</button>
         </li>
-      </ul>
-    </div>
+      </ul-->
+    <table>
+      <!--thead>
+        <tr>
+          <th>Nimi</th>
+          <th>Rooli</th>
+          <th>Ryhmä</th>
+          <th>Poista</th>
+        </tr>
+      </thead-->
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.group }}</td>
+          <td><button (click)="deleteUser(user._id)">Poista</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <!--/div-->
     <div class="user-button" routerLink="/add-user">
       <p>Lisää uusi</p>
+    </div>
+  </div>
+
+  <!-- Loans Section -->
+  <div class="loans">
+    <div class="loan-header">
+      <h3>LAINAUSLISTA</h3>
+    </div>
+    <div class="loan-content">
+      <div *ngIf="loanedItems.length > 0; else noItemsPlaceholder">
+        <div *ngFor="let item of loanedItems">
+          <p>
+            {{ item.itemname }} on lainassa henkilöllä
+            {{ item.loaner.username }} / {{ item.loaner.group }} paikassa
+            {{ item.location }}
+          </p>
+        </div>
+      </div>
+
+      <ng-template #noItemsPlaceholder>
+        <p>Ei tällä hetkellä tavaroita lainassa.</p>
+      </ng-template>
     </div>
   </div>
 
   <!-- Item Section -->
   <div class="items">
     <div class="item-header">
-      <h3>Työkalut järjestelmässä</h3>
+      <h3>TYÖKALUT</h3>
     </div>
     <div class="item-content">
       <ul>
         <li *ngFor="let item of items">
-          {{ item.itemname }} - {{ item.location }}
+          {{ item.itemname }}
           <button (click)="deleteItem(item._id)">Poista</button>
         </li>
       </ul>
@@ -38,7 +78,7 @@
   <!-- Location Section -->
   <div class="locations">
     <div class="location-header">
-      <h3>Työkalujen käyttöpaikat</h3>
+      <h3>TYÖALUEET</h3>
     </div>
     <div class="location-content">
       <ul>

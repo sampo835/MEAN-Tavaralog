@@ -1,20 +1,19 @@
-// add-user.component.ts
-
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user/user.service';
-import { RfidService } from '../../services/rfid/rfid.service';
+import { UserService } from '../../../services/user/user.service';
+import { RfidService } from '../../../services/rfid/rfid.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss'],
+  selector: 'app-add-first-user',
+  templateUrl: './add-first-user.component.html',
+  styleUrls: ['./add-first-user.component.scss'],
 })
-export class AddUserComponent implements OnInit {
+export class AddFirstUserComponent implements OnInit {
   addUserForm!: FormGroup;
-  showForm = true;
+  showWelcomeMessage = true; // Add variable to control welcome message
+  showForm = false; // Initialize form as hidden
   showScanTag = false;
   showSuccessMessage = false;
 
@@ -28,13 +27,18 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+
+    // Display welcome message for 3 seconds before showing form
+    setTimeout(() => {
+      this.showWelcomeMessage = false;
+      this.showForm = true;
+      this.cdr.detectChanges(); // Trigger change detection after updating properties
+    }, 3000);
   }
 
   initForm() {
     this.addUserForm = this.formBuilder.group({
       username: ['', Validators.required],
-      role: ['', Validators.required],
-      group: ['', Validators.required],
     });
   }
 
@@ -53,6 +57,8 @@ export class AddUserComponent implements OnInit {
     rfidTag = rfidTag.trim();
     const userData = this.addUserForm.value;
     userData.rfidTag = rfidTag; // Associate the scanned RFID tag with the new user
+    userData.role = 'admin'; // Set role to admin
+    userData.group = 'Opettaja';
 
     this.userService.addUser(userData).subscribe(
       () => {

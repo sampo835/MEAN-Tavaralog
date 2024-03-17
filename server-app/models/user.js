@@ -1,5 +1,3 @@
-// User model for the database
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
