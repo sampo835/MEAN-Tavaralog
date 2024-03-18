@@ -52,7 +52,7 @@ export class ReturnItemComponent implements OnInit, OnDestroy {
 
             // Navigate to the main menu after 2 seconds
             setTimeout(() => {
-              this.router.navigate(['']);
+              this.router.navigate(['/main-menu']);
             }, 2000);
           },
           (error) => {
@@ -73,7 +73,7 @@ export class ReturnItemComponent implements OnInit, OnDestroy {
 
             // Navigate to the main menu after 2 seconds, even if there's an error
             setTimeout(() => {
-              this.router.navigate(['']);
+              this.router.navigate(['main-menu']);
             }, 2000);
           }
         );

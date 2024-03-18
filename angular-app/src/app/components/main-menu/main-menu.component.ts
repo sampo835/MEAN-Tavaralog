@@ -20,16 +20,8 @@ export class MainMenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((users) => {
-      if (users.length === 0) {
-        this.router.navigate(['/add-first-user']);
-      }
-    });
-  }
-
-  /*ngOnInit(): void {
     //this.loadLoanedItems();
-  }*/
+  }
 
   /*loadLoanedItems() {
     this.itemService.getLoanedItems().subscribe(

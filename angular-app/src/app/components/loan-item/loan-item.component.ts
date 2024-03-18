@@ -68,8 +68,6 @@ export class LoanItemComponent implements OnInit, OnDestroy {
             (response) => {
               this.isLoading = false;
               if (response.userExists) {
-                //this.isIdentificationPhase = false;
-                //this.isScanItemPhase = true;
                 this.displayMessage = 'Käyttäjä löytyi';
                 setTimeout(() => {
                   this.isIdentificationPhase = false;
@@ -91,7 +89,7 @@ export class LoanItemComponent implements OnInit, OnDestroy {
               } else {
                 console.error('Error checking user:', error);
                 setTimeout(() => {
-                  this.router.navigate(['']);
+                  this.router.navigate(['/main-menu']);
                 }, 2000);
               }
               this.cdr.detectChanges();
@@ -128,7 +126,7 @@ export class LoanItemComponent implements OnInit, OnDestroy {
             (itemError) => {
               console.error('Error checking item:', itemError);
               setTimeout(() => {
-                this.router.navigate(['']);
+                this.router.navigate(['/main-menu']);
               }, 2000);
             }
           );

@@ -16,9 +16,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(51, 51, 51, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   width: 100vw;
-  height: 400px;
+  height: 500px;
   text-align: center;
 }
 
@@ -35,8 +35,8 @@
 
 .loan,
 .return {
-  height: 300px;
-  width: 500px;
+  height: 400px;
+  width: 600px;
   font-size: 40px;
   font-weight: bold;
   border-radius: 10px;
@@ -51,8 +51,8 @@
 
   &:hover {
     background-color: #5c72ff;
-    height: 285px;
-    width: 475px;
+    height: 380px;
+    width: 570px;
     font-size: 38px;
   }
 

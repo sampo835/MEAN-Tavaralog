@@ -16,7 +16,7 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { CheckAdminComponent } from './components/check-admin/check-admin.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AddLocationComponent } from './components/add-location/add-location.component';
-import { AddFirstUserComponent } from './components/add-first-user/add-first-user/add-first-user.component';
+import { StartupComponent } from './components/startup/startup/startup.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { AddFirstUserComponent } from './components/add-first-user/add-first-use
     CheckAdminComponent,
     HeaderComponent,
     AddLocationComponent,
-    AddFirstUserComponent,
+    StartupComponent,
   ],
   imports: [
     BrowserModule,
