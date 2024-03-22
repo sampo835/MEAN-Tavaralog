@@ -1,12 +1,22 @@
-<div *ngIf="showForm">
-  <form [formGroup]="addLocationForm" (ngSubmit)="onSubmit()">
-    <label for="name">Anna paikan nimi:</label>
-    <input type="text" formControlName="name" />
+<section class="container">
+  <div *ngIf="showForm">
+    <form [formGroup]="addLocationForm" (ngSubmit)="onSubmit()">
+      <label for="name">Anna paikan nimi:</label>
+      <input type="text" formControlName="name" />
 
-    <button type="submit">Lisää</button>
-  </form>
-</div>
+      <div *ngIf="showFormError" class="error-message">
+        <p>Täytä kenttä!</p>
+      </div>
 
-<div class="message" *ngIf="showSuccessMessage">
-  <p>Paikka lisätty!</p>
-</div>
+      <button type="submit">Lisää</button>
+    </form>
+  </div>
+
+  <div class="message" *ngIf="showSuccessMessage">
+    <p>Paikka lisätty!</p>
+  </div>
+
+  <div class="message" *ngIf="showErrorMessage">
+    <p>Paikka on jo olemassa</p>
+  </div>
+</section>

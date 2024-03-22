@@ -1,31 +1,21 @@
-<div class="message">{{ displayMessage }}</div>
+<section class="container">
+  <div class="message">{{ displayMessage }}</div>
 
-<div class="container" *ngIf="isLoading">
-  <div class="line-animation"></div>
-</div>
-
-<!--DROPDOWN
-<div class="location-selection" *ngIf="showLocationDropdown">
-  <select id="locationSelect" [(ngModel)]="chosenLocation">
-    <option value="" disabled selected hidden>Valitse sijainti:</option>
-    <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
-  </select>
-  <button class="confirm-location-button" (click)="confirmLocation()">
-    Jatka
-  </button>
-</div>-->
-
-<!--BUTTON-->
-<div class="location-selection" *ngIf="showLocationDropdown">
-  <label>Valitse sijainti:</label>
-  <div class="location-buttons" *ngIf="locations.length > 0">
-    <button *ngFor="let loc of locations" (click)="selectLocation(loc)">
-      {{ loc }}
-    </button>
+  <div class="line" *ngIf="isLoading">
+    <div class="line-animation"></div>
   </div>
-  <div *ngIf="locations.length === 0">
-    <button (click)="selectLocation('Somewhere')">Somewhere</button>
+
+  <div class="location-selection" *ngIf="showLocationDropdown">
+    <label>Valitse sijainti:</label>
+    <div class="location-buttons" *ngIf="locations.length > 0">
+      <button *ngFor="let loc of locations" (click)="selectLocation(loc)">
+        {{ loc }}
+      </button>
+    </div>
+    <div *ngIf="locations.length === 0">
+      <button (click)="selectLocation('Somewhere')">Somewhere</button>
+    </div>
   </div>
-</div>
+</section>
 
 <button class="back-button" routerLink="/main-menu">PALAA PÄÄVALIKKOON</button>

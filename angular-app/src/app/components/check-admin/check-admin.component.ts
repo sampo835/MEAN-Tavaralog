@@ -18,8 +18,10 @@ import { Subscription } from 'rxjs';
 })
 export class CheckAdminComponent implements OnInit, OnDestroy {
   enteredUserRfidTag: string = '';
-  displayMessage: string = 'Lue lukukortti';
-  isLoading: boolean = true; // Show waiting animation initially
+  displayMessage: string = '';
+  isLoading: boolean = false;
+  isScanAdminPhase: boolean = true;
+  isScanSuccesPhase: boolean = false;
   private rfidSubscription: Subscription | undefined;
 
   constructor(
@@ -30,72 +32,64 @@ export class CheckAdminComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to RFID data
+    this.displayMessage = 'Tunnistaudu';
     this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
-      // Check if the display message is "Lue lukukortti"
-      if (this.displayMessage === 'Lue lukukortti') {
-        // Store the scanned RFID tag
-        this.enteredUserRfidTag = data;
+      // WHEN TAG IS SCANNED
+      this.displayMessage = 'Luku onnistui, tarkistetaan..';
+      this.isLoading = true;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        // ADMIN SEARCH
+        if ((this.isScanAdminPhase = true)) {
+          this.enteredUserRfidTag = data;
 
-        // Check if the user is an admin
-        this.userService.checkAdmin(this.enteredUserRfidTag).subscribe(
-          (response) => {
-            // Loading is complete
-            this.isLoading = false;
+          this.userService.checkAdmin(this.enteredUserRfidTag).subscribe(
+            (response) => {
+              this.isLoading = false;
 
-            // Check if the user is an admin
-            if (response.isAdmin) {
-              // Update display message
-              this.displayMessage = 'Skannaus onnistui';
+              // Check if the user is an admin
+              if (response.isAdmin) {
+                this.displayMessage = 'Tervetuloa';
+                this.cdr.detectChanges();
+
+                setTimeout(() => {
+                  this.router.navigate(['/management']);
+                }, 2000);
+              } else {
+                this.displayMessage = 'Käyttäjä ei ole opettaja';
+                this.cdr.detectChanges();
+                setTimeout(() => {
+                  this.router.navigate(['/main-menu']);
+                }, 2000);
+              }
+            },
+            (error) => {
+              this.isLoading = false;
+
+              // Handle error responses
+              if (error.status === 404) {
+                // Display message for user not found
+                this.displayMessage = 'Käyttäjää ei löytynyt';
+              } else {
+                // Display message for other errors
+                this.displayMessage = 'Jokin meni pieleen';
+              }
 
               // Trigger change detection after updating displayMessage
               this.cdr.detectChanges();
 
-              // Navigate to the "management" route after 2 seconds
+              // Navigate to the main menu after 2 seconds, even if there's an error
               setTimeout(() => {
-                this.router.navigate(['/management']);
-              }, 2000);
-            } else {
-              // Update display message if user is not an admin
-              this.displayMessage = 'Käyttäjä ei ole opettaja';
-
-              // Trigger change detection after updating displayMessage
-              this.cdr.detectChanges();
-
-              // Navigate to the main menu after 2 seconds
-              setTimeout(() => {
-                this.router.navigate(['']);
+                this.router.navigate(['main-menu']);
               }, 2000);
             }
-          },
-          (error) => {
-            // Loading is complete
-            this.isLoading = false;
-
-            // Handle error responses
-            if (error.status === 404) {
-              // Display message for user not found
-              this.displayMessage = 'Käyttäjää ei löytynyt';
-            } else {
-              // Display message for other errors
-              this.displayMessage = 'Jokin meni pieleen';
-            }
-
-            // Trigger change detection after updating displayMessage
-            this.cdr.detectChanges();
-
-            // Navigate to the main menu after 2 seconds, even if there's an error
-            setTimeout(() => {
-              this.router.navigate(['']);
-            }, 2000);
-          }
-        );
-      }
+          );
+        }
+      }, 2000);
     });
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from the RFID data subscription to prevent memory leaks
     if (this.rfidSubscription) {
       this.rfidSubscription.unsubscribe();
     }

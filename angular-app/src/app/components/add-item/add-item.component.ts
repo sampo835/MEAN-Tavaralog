@@ -1,5 +1,3 @@
-// add-item.component.ts
-
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +16,9 @@ export class AddItemComponent implements OnInit {
   showForm = true;
   showScanTag = false;
   showSuccessMessage = false;
+  showFormError = false;
+  showErrorMessage = false;
+  errorMessage = '';
 
   private rfidSubscription!: Subscription;
 
@@ -35,7 +36,6 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
     if (this.rfidSubscription) {
       this.rfidSubscription.unsubscribe();
     }
@@ -49,6 +49,12 @@ export class AddItemComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.addItemForm.invalid) {
+      this.showFormError = true;
+      // this.errorMessage = 'Anna nimi ensin!';
+      return;
+    }
+
     this.showForm = false;
     this.showScanTag = true;
   }
@@ -71,17 +77,25 @@ export class AddItemComponent implements OnInit {
         this.showScanTag = false;
         this.showSuccessMessage = true;
 
-        // Perform change detection before redirection
         this.cdr.detectChanges();
 
-        // Redirect to the management page after a delay
         setTimeout(() => {
           this.router.navigate(['/management']);
-        }, 2000); // Adjust the delay as needed
+        }, 2000);
       },
       (error) => {
         console.error(error);
-        // Handle error as needed
+
+        if (error.status === 400 && error.error && error.error.message) {
+          this.showErrorMessage = true;
+          this.showForm = false;
+
+          setTimeout(() => {
+            this.router.navigate(['/management']);
+          }, 2000);
+        } else {
+          // Handle other errors if needed
+        }
       }
     );
   }

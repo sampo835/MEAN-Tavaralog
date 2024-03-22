@@ -1,26 +1,120 @@
-// GLOBAL STYLES
-
-* {
+/* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  //border: 1px #ff00bf solid;
-}
+  border: 1px #009dff solid;
+}*/
 
 body {
-  //background-color: #76e8ff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 16px;
-  line-height: 1.5em;
-  color: #101010;
-  background: url("./assets/img/background_3.jpg");
+  font-size: 18px;
+  color: #000000;
+  //background: url("./assets/img/background_3.jpg");
   background-size: cover;
-  background-color: aqua;
+  background-color: #444;
 }
 
+// MAIN CONTAINER
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  //ackground-color: #000;
+  width: 100vw;
+  min-height: 500px;
+  max-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// ON SCREEN MESSAGES
 .message {
   font-size: 80px;
   color: #ffffff;
-  //background-color: #333;
+}
+
+// LOADING ANIMATION
+.line {
+  position: relative;
+  width: 400px;
+  height: 20px;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+.line-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  animation: moveLine 3s linear infinite;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+}
+
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+// BACK BUTTON
+.back-button {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+}
+
+// FORM STYLES
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 350px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+label {
+  margin-bottom: 12px;
+  font-size: 18px; /* Adjust the font size for labels */
+}
+
+input {
+  width: 100%;
+  padding: 12px; /* Increase padding to make input fields bigger */
+  margin-bottom: 20px; /* Increase margin to provide more spacing */
+  font-size: 18px; /* Adjust the font size for input fields */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 14px; /* Increase padding for larger buttons */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px; /* Adjust the font size for buttons */
+
+  &:hover {
+    background-color: #0056b3;
+  }
 }

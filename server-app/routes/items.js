@@ -3,8 +3,6 @@ const router = express.Router();
 const Item = require("../models/item");
 const User = require("../models/user");
 
-//----------------------------------------------------------------------//
-
 // Route to add an item
 router.post("/add-item", async (req, res) => {
   try {
@@ -19,10 +17,11 @@ router.post("/add-item", async (req, res) => {
       itemname,
       isLoaned: isLoaned || false,
       loaner: null,
-      location: "stock",
+      location: "Varasto",
       rfidTag,
     });
 
+    // Attempt to save the new item
     await newItem.save();
 
     res.status(201).json({ message: "Item added successfully" });
@@ -30,18 +29,16 @@ router.post("/add-item", async (req, res) => {
     console.error("MongoDB Error:", error); // Log the full error for debugging
 
     if (error.code === 11000 || error.name === "MongoError") {
-      const duplicateKey = error.keyValue ? error.keyValue.itemname : "unknown"; // Extract duplicate key value
+      const duplicateKey = error.keyValue ? error.keyValue.rfidTag : "unknown"; // Extract duplicate key value
       return res
         .status(400)
-        .json({ error: `Duplicate key error for RFID tag: ${duplicateKey}` });
+        .json({ error: `Item with RFID tag '${rfidTag}' already exists` });
     }
 
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-//----------------------------------------------------------------------//
 
 // Route to delete an item by ID
 router.delete("/delete-item/:itemId", async (req, res) => {
@@ -64,8 +61,6 @@ router.delete("/delete-item/:itemId", async (req, res) => {
   }
 });
 
-//----------------------------------------------------------------------//
-
 // Route to get all items
 router.get("/get-items", async (req, res) => {
   try {
@@ -79,8 +74,6 @@ router.get("/get-items", async (req, res) => {
   }
 });
 
-//----------------------------------------------------------------------//
-
 // Route to get loaned items
 router.get("/get-loaned-items", async (req, res) => {
   try {
@@ -93,8 +86,6 @@ router.get("/get-loaned-items", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-//----------------------------------------------------------------------//
 
 // Route to loan an item by providing both user and item RFID tags, including location
 router.put("/loan-item", async (req, res) => {
@@ -134,8 +125,6 @@ router.put("/loan-item", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
-//----------------------------------------------------------------------//
 
 // Route to return a loaned item
 router.put("/return/:rfidTag", async (req, res) => {

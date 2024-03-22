@@ -1,26 +1,35 @@
-<div *ngIf="showForm">
-  <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-    <!-- Your form fields here -->
-    <label for="username">Anna nimi:</label>
-    <input type="text" id="username" formControlName="username" />
+<section class="container">
+  <div *ngIf="showForm">
+    <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+      <label for="username">Anna nimi:</label>
+      <input type="text" id="username" formControlName="username" />
 
-    <label for="role">Valitse rooli:</label>
-    <select id="role" formControlName="role">
-      <option value="admin">Opettaja</option>
-      <option value="regular">Oppilas</option>
-    </select>
+      <label for="role">Valitse rooli:</label>
+      <select id="role" formControlName="role">
+        <option value="admin">Opettaja</option>
+        <option value="regular">Oppilas</option>
+      </select>
 
-    <label for="group">Lisää ryhmä:</label>
-    <input type="text" id="group" formControlName="group" />
+      <label for="group">Lisää ryhmä:</label>
+      <input type="text" id="group" formControlName="group" />
 
-    <button type="submit">Jatka</button>
-  </form>
-</div>
+      <div *ngIf="showFormError" class="error-message">
+        <p>Täytä kenttä!</p>
+      </div>
 
-<div class="message" *ngIf="showScanTag">
-  <p>Skannaa vielä tägi</p>
-</div>
+      <button type="submit">Jatka</button>
+    </form>
+  </div>
 
-<div class="message" *ngIf="showSuccessMessage">
-  <p>Uusi käyttäjä lisätty!</p>
-</div>
+  <div class="message" *ngIf="showScanTag">
+    <p>Skannaa vielä tägi</p>
+  </div>
+
+  <div class="message" *ngIf="showSuccessMessage">
+    <p>Uusi käyttäjä lisätty!</p>
+  </div>
+
+  <div class="message" *ngIf="showErrorMessage">
+    <p>Käyttäjä on jo olemassa</p>
+  </div>
+</section>

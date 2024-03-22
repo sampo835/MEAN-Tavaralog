@@ -1,5 +1,3 @@
-// add-user.component.ts
-
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +15,9 @@ export class AddUserComponent implements OnInit {
   showForm = true;
   showScanTag = false;
   showSuccessMessage = false;
+  showErrorMessage = false;
+  showFormError = false;
+  errorMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +40,12 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.addUserForm.invalid) {
+      this.showFormError = true;
+      // this.errorMessage = 'Fill in the required fields!';
+      return;
+    }
+
     this.showForm = false; // Hide the form
     this.showScanTag = true; // Show the "Scan user tag" message
 
@@ -61,15 +68,34 @@ export class AddUserComponent implements OnInit {
 
         // Trigger change detection after updating properties
         this.cdr.detectChanges();
+
+        setTimeout(() => {
+          this.router.navigate(['/management']); // Update the route as needed
+        }, 2000);
       },
       (error) => {
         console.error(error);
-        // Handle error as needed
+
+        if (error.status === 400) {
+          this.showErrorMessage = true;
+          this.showScanTag = false;
+
+          this.cdr.detectChanges();
+
+          setTimeout(() => {
+            this.router.navigate(['/management']);
+          }, 2000);
+        } else {
+          this.showErrorMessage = true;
+          this.showScanTag = false;
+
+          this.cdr.detectChanges();
+
+          setTimeout(() => {
+            this.router.navigate(['/management']);
+          }, 2000);
+        }
       }
     );
-
-    setTimeout(() => {
-      this.router.navigate(['/management']); // Update the route as needed
-    }, 2000);
   }
 }

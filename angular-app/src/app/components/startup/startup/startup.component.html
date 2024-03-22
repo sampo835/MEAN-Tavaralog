@@ -1,17 +1,19 @@
-<div class="message" *ngIf="showWelcomeMessage">
-  <p>Tervetuloa</p>
-</div>
+<section class="container">
+  <div class="message" *ngIf="showWelcomeMessage">
+    <p>Käynnistetään</p>
+  </div>
 
-<form *ngIf="showForm" [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-  <label for="username">Anna nimi:</label>
-  <input type="text" id="username" formControlName="username" />
-  <button type="submit">Jatka</button>
-</form>
+  <form *ngIf="showForm" [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+    <label for="username">Anna nimi:</label>
+    <input type="text" id="username" formControlName="username" />
+    <button type="submit">Jatka</button>
+  </form>
 
-<div class="message" *ngIf="showScanTag">
-  <p>Skannaa tägi</p>
-</div>
+  <div class="message" *ngIf="showScanTag">
+    <p>Lue lätkä</p>
+  </div>
 
-<div class="message" *ngIf="showSuccessMessage">
-  <p>Käyttäjä lisätty</p>
-</div>
+  <div class="message" *ngIf="showSuccessMessage">
+    <p>Käyttäjä lisätty</p>
+  </div>
+</section>

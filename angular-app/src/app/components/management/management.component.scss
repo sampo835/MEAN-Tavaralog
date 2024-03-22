@@ -5,17 +5,17 @@
 }
 
 .container {
-  margin: auto;
-  width: 1200px;
+  //margin: auto;
+  //width: 1200px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "us us it"
     "loa loa loc";
   grid-gap: 10px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  //align-items: center;
+  //justify-content: center;
+  //text-align: center;
 
   //.users {
   //width: 600px;

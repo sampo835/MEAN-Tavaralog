@@ -1,26 +1,13 @@
-.container {
-  /*margin: auto;
-  background-color: #333;
-  text-align: center;
-  //max-width: 1200px;
-  width: 100vw;
-  height: 400px;*/
-  display: grid;
-  grid-template-areas:
-    "big"
-    "small";
-}
-
-.container {
+/*.container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100vw;
   height: 500px;
   text-align: center;
-}
+}*/
 
 .buttons {
   display: grid;
@@ -30,7 +17,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  grid-area: big;
+  height: 100%;
+  color: #000;
 }
 
 .loan,
@@ -75,10 +63,16 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
   grid-template-areas: "set inf ard";
-  grid-area: small;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 500px;
+  height: 100px;
 }
 
 .settings,

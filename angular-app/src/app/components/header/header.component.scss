@@ -1,57 +1,33 @@
 header {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 70px;
   position: fixed;
   top: 0;
   width: 100%;
-  //background-color: #333;
+  /* background-color: #333; */
   color: white;
   z-index: 9999;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  color: white;
+.logo {
+  position: absolute;
+  left: 10px; /* Adjust as needed */
+}
 
-  .logo-container {
-    margin-right: 10px;
-  }
+.logo img {
+  max-height: 40px;
+}
 
-  .logo {
-    img {
-      max-height: 40px;
-    }
-  }
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 24px;
+}
 
-  .title {
-    flex-grow: 1;
-    text-align: center;
-    h1 {
-      margin: 0;
-    }
-  }
-  .links {
-    display: flex;
-    gap: 10px;
-  }
-
-  .settings,
-  .info {
-    width: 120px;
-    height: 40px;
-    background-color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    color: #333;
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-      background-color: #0034b9;
-    }
-  }
+.title h2 {
+  margin: 0;
 }

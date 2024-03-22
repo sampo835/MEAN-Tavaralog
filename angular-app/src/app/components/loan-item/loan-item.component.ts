@@ -51,7 +51,7 @@ export class LoanItemComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.fetchLocations();
+    //this.fetchLocations();
     this.setPhaseMessage();
     this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
       // WHEN TAG IS SCANNED
@@ -62,7 +62,6 @@ export class LoanItemComponent implements OnInit, OnDestroy {
         // USER SCAN PHASE
         if (this.isIdentificationPhase) {
           this.enteredUserRfidTag = data;
-          this.isLoading = true;
 
           this.userService.checkUser(this.enteredUserRfidTag).subscribe(
             (response) => {
@@ -78,6 +77,9 @@ export class LoanItemComponent implements OnInit, OnDestroy {
               } else {
                 this.isIdentificationPhase = false;
                 this.displayMessage = 'Käyttäjää ei löydy';
+                setTimeout(() => {
+                  this.router.navigate(['/main-menu']);
+                }, 2000);
               }
               this.cdr.detectChanges();
             },
@@ -88,11 +90,11 @@ export class LoanItemComponent implements OnInit, OnDestroy {
                 this.displayMessage = 'Käyttäjää ei löydy';
               } else {
                 console.error('Error checking user:', error);
-                setTimeout(() => {
-                  this.router.navigate(['/main-menu']);
-                }, 2000);
               }
               this.cdr.detectChanges();
+              setTimeout(() => {
+                this.router.navigate(['/main-menu']);
+              }, 2000);
             }
           );
         }
@@ -102,9 +104,9 @@ export class LoanItemComponent implements OnInit, OnDestroy {
           this.isLoading = true;
 
           this.itemService.checkItem(this.enteredItemRfidTag).subscribe(
-            (itemResponse) => {
+            (response) => {
               this.isLoading = false;
-              if (itemResponse.itemExists && !itemResponse.isLoaned) {
+              if (response.itemExists && !response.isLoaned) {
                 this.isScanItemPhase = false;
                 this.isChooseLocationPhase = true;
                 this.displayMessage = 'Tavaran voi lainata';
@@ -118,13 +120,19 @@ export class LoanItemComponent implements OnInit, OnDestroy {
               } else {
                 this.displayMessage = 'Tavaraa ei voi lainata';
                 setTimeout(() => {
-                  this.router.navigate(['']);
+                  this.router.navigate(['/main-menu']);
                 }, 2000);
               }
               this.cdr.detectChanges();
             },
-            (itemError) => {
-              console.error('Error checking item:', itemError);
+            (error) => {
+              this.isLoading = false;
+              if (error.status === 404) {
+                this.displayMessage = 'Tavaraa ei löydy';
+              } else {
+                console.error('Error checking item:', error);
+              }
+              this.cdr.detectChanges();
               setTimeout(() => {
                 this.router.navigate(['/main-menu']);
               }, 2000);
@@ -133,6 +141,7 @@ export class LoanItemComponent implements OnInit, OnDestroy {
         }
         // CHOOSE LOCATION PHASE
         else if (this.isChooseLocationPhase) {
+          this.fetchLocations();
           this.cdr.detectChanges();
         }
       }, 2000);
@@ -166,12 +175,12 @@ export class LoanItemComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
 
           setTimeout(() => {
-            this.router.navigate(['']);
+            this.router.navigate(['main-menu']);
           }, 3000);
         },
         (loanError) => {
           console.error('Error loaning item:', loanError);
-          this.router.navigate(['']);
+          this.router.navigate(['main-menu']);
         }
       );
   }

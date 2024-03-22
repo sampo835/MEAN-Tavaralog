@@ -14,7 +14,8 @@ export class AddLocationComponent implements OnInit {
   addLocationForm!: FormGroup;
   showForm = true;
   showSuccessMessage = false;
-  showError = false;
+  showErrorMessage = false;
+  showFormError = false;
   errorMessage = '';
 
   private rfidSubscription!: Subscription;
@@ -31,7 +32,6 @@ export class AddLocationComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
     if (this.rfidSubscription) {
       this.rfidSubscription.unsubscribe();
     }
@@ -44,30 +44,35 @@ export class AddLocationComponent implements OnInit {
   }
 
   onSubmit() {
-    const locationData = this.addLocationForm.value;
+    if (this.addLocationForm.invalid) {
+      this.showFormError = true;
+      //this.errorMessage = 'Anna nimi ensin!';
+      return;
+    }
 
+    const locationData = this.addLocationForm.value;
     this.locationService.addLocation(locationData).subscribe(
       () => {
         this.showForm = false;
         this.showSuccessMessage = true;
 
-        // Perform change detection before redirection
         this.cdr.detectChanges();
 
-        // Redirect to the management page after a delay
         setTimeout(() => {
           this.router.navigate(['/management']);
-        }, 2000); // Adjust the delay as needed
+        }, 2000);
       },
       (error) => {
         console.error(error);
 
         if (error.status === 400 && error.error && error.error.message) {
-          // Handle the specific case where the location already exists
-          this.showError = true;
-          this.errorMessage = error.error.message;
+          this.showErrorMessage = true;
+          this.showForm = false;
+
+          setTimeout(() => {
+            this.router.navigate(['/management']);
+          }, 2000);
         } else {
-          // Handle other errors as needed
         }
       }
     );

@@ -1,19 +1,26 @@
-<div *ngIf="showForm">
-  <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-    <!-- Item Details Form Fields (itemname, etc.) -->
-    <label for="itemname">Tavaran nimi:</label>
-    <input type="text" formControlName="itemname" />
+<section class="container">
+  <div *ngIf="showForm">
+    <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+      <label for="itemname">Tavaran nimi:</label>
+      <input type="text" formControlName="itemname" />
 
-    <!-- Other Form Fields -->
+      <div *ngIf="showFormError" class="error-message">
+        <p>Täytä kenttä!</p>
+      </div>
 
-    <button type="submit">Jatka</button>
-  </form>
-</div>
+      <button type="submit">Jatka</button>
+    </form>
+  </div>
 
-<div class="message" *ngIf="showScanTag">
-  <p>Skannaa uusi tavara</p>
-</div>
+  <div class="message" *ngIf="showScanTag">
+    <p>Skannaa uusi tavara</p>
+  </div>
 
-<div class="message" *ngIf="showSuccessMessage">
-  <p>Uusi tavara luotu!</p>
-</div>
+  <div class="message" *ngIf="showSuccessMessage">
+    <p>Uusi tavara lisätty!</p>
+  </div>
+
+  <div class="message" *ngIf="showErrorMessage">
+    <p>Virhe lisätessä tavara</p>
+  </div>
+</section>
