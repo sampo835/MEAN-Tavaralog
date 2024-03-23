@@ -5,163 +5,35 @@
 }
 
 .container {
-  //margin: auto;
-  //width: 1200px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
-    "us us it"
-    "loa loa loc";
-  grid-gap: 10px;
-  //align-items: center;
-  //justify-content: center;
-  //text-align: center;
-
-  //.users {
-  //width: 600px;
-  //}
+    "loa loa loa loa"
+    "us us it loc";
+  grid-gap: 25px;
 
   .users,
   .items,
   .locations,
   .loans {
     background-color: #fff;
-    //margin: 20px;
     height: 300px;
     display: flex;
     flex-direction: column;
+    //border-radius: 10px;
     //justify-content: space-between;
-    border: 3px #003873 solid;
-    border-radius: 10px;
-
-    .user-header,
-    .item-header,
-    .location-header,
-    .loan-header {
-      h2,
-      h3 {
-        background-color: #aaaaaa;
-        //color: #fff;
-        text-align: center;
-        padding-left: 5px;
-      }
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    table th,
-    table td {
-      border: 1px solid #dcdcdc;
-      padding: 5px;
-      text-align: left;
-    }
-
-    table th {
-      background-color: #f2f2f2;
-    }
-
-    .user-content,
-    .item-content,
-    .location-content,
-    .loan-content {
-      flex: 1;
-      padding: 10px;
-
-      ul {
-        list-style: none;
-        padding: 0;
-        overflow-y: auto;
-        height: 200px;
-        //background-color: #bababa;
-
-        li {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          //margin-bottom: 5px;
-          border-bottom: 1px solid #000000;
-
-          button {
-            background-color: #dc3545;
-            color: #fff;
-            padding: 5px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &:hover {
-              background-color: #bd2130;
-            }
-          }
-        }
-      }
-
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-
-      table th,
-      table td {
-        border: 1px solid #000000;
-        padding: 5px;
-        text-align: left;
-      }
-
-      table th {
-        background-color: #f2f2f2;
-      }
-    }
-
-    .user-button,
-    .item-button,
-    .location-button {
-      background-color: #ffffff;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-      height: 40px;
-      width: 150px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      //margin-left: auto;
-      margin-left: 20px;
-      margin-right: auto;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #dfdfdf;
-      }
-    }
   }
 
   .users {
     grid-area: us;
   }
-
   .items {
     grid-area: it;
   }
-
   .locations {
     grid-area: loc;
   }
-
   .loans {
     grid-area: loa;
   }
-}
-
-.back-button {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  cursor: pointer;
 }
