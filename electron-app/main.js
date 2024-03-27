@@ -26,7 +26,7 @@ function createWindow() {
   mainWindow.loadURL(`file://${__dirname}/../dist/browser/index.html`); //THIS IS THE RIGHT WAY TO LOAD CLIENT TO AVOID WHITE SCREEN IN EXE!!
 
   // Open developer tools
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Setup RFID reader
   const port = new SerialPort({ path: "COM4", baudRate: 115200 }); // CORRECT WAY IN VERSION 12!!

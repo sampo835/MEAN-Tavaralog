@@ -12,7 +12,7 @@ body {
   color: #000000;
   //background: url("./assets/img/background_3.jpg");
   background-size: cover;
-  background-color: #444;
+  background-color: #303149;
 }
 
 // MAIN CONTAINER
@@ -21,8 +21,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  //ackground-color: #000;
-  width: 1200px;
+  background-color: rgba(0, 0, 0, 0.5);
+  //width: 1200px;
+  width: 100%;
   min-height: 500px;
   max-height: 1200px;
   display: flex;
@@ -34,7 +35,9 @@ body {
 // ON SCREEN MESSAGES
 .message {
   font-size: 80px;
+  padding: 20px;
   color: #ffffff;
+  //background-color: rgba(0, 0, 0, 0.8);
 }
 
 // LOADING ANIMATION
@@ -78,7 +81,7 @@ form {
   margin: auto;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  //border-radius: 8px;
   background-color: #fff;
 
   label {
@@ -149,7 +152,7 @@ form {
   transform: translateX(-50%);
   background-color: #757575; // Gray
   color: white;
-  padding: 10px 20px;
+  padding: 20px 20px;
   border: none;
   //border-radius: 5px;
   cursor: pointer;
