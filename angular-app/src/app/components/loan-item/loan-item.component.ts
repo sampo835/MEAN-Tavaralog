@@ -10,6 +10,7 @@ import { RfidService } from '../../services/rfid/rfid.service';
 import { UserService } from '../../services/user/user.service';
 import { ItemService } from '../../services/item/item.service';
 import { LocationService } from '../../services/location/location.service';
+import { LoanService } from '../../services/loan/loan.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,6 +23,8 @@ export class LoanItemComponent implements OnInit, OnDestroy {
   // Store strings
   enteredUserRfidTag: string = '';
   enteredItemRfidTag: string = '';
+  itemName: string = '';
+  userName: string = '';
   chosenLocation: string = '';
   locations: string[] = [];
   displayMessage: string = '';
@@ -46,12 +49,13 @@ export class LoanItemComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private itemService: ItemService,
     private locationService: LocationService,
+    private loanService: LoanService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    //this.fetchLocations();
+    this.fetchLocations();
     this.setPhaseMessage();
     this.rfidSubscription = this.rfidService.rfidData$.subscribe((data) => {
       // WHEN TAG IS SCANNED
@@ -155,34 +159,75 @@ export class LoanItemComponent implements OnInit, OnDestroy {
     }
   }
 
-  // SELECT LOCATION
+  // SELECT LOCATION + HISTORY
   selectLocation(location: string): void {
     this.chosenLocation = location;
     this.isChooseLocationPhase = false;
     this.cdr.detectChanges();
 
-    this.itemService
-      .loanItem(
-        this.enteredItemRfidTag,
-        this.enteredUserRfidTag,
-        this.chosenLocation
-      )
-      .subscribe(
-        (loanResponse) => {
-          this.showLocationDropdown = false;
-          this.isLoanSuccessPhase = true;
-          this.setPhaseMessage();
-          this.cdr.detectChanges();
+    const currentTime = new Date();
 
-          setTimeout(() => {
+    const userRfidTag = this.enteredUserRfidTag.trim();
+    const itemRfidTag = this.enteredItemRfidTag.trim();
+    this.userService.getUser(userRfidTag).subscribe(
+      (user) => {
+        this.userName = user.username;
+        // Call the itemService to get the item name
+        this.itemService.getItem(itemRfidTag).subscribe(
+          (item) => {
+            this.itemName = item.itemname;
+            // Call the loanService to create a loan
+            this.loanService
+              .createLoan(
+                this.itemName,
+                this.userName,
+                this.chosenLocation,
+                currentTime
+              )
+              .subscribe(
+                (loanResponse) => {
+                  // Call the itemService to loan the item
+                  this.itemService
+                    .loanItem(
+                      this.enteredItemRfidTag,
+                      this.enteredUserRfidTag,
+                      this.chosenLocation,
+                      currentTime
+                    )
+                    .subscribe(
+                      (loanResponse) => {
+                        this.showLocationDropdown = false;
+                        this.isLoanSuccessPhase = true;
+                        this.setPhaseMessage();
+                        this.cdr.detectChanges();
+
+                        setTimeout(() => {
+                          this.router.navigate(['main-menu']);
+                        }, 3000);
+                      },
+                      (loanError) => {
+                        console.error('Error loaning item:', loanError);
+                        this.router.navigate(['main-menu']);
+                      }
+                    );
+                },
+                (loanError) => {
+                  console.error('Error creating loan:', loanError);
+                  this.router.navigate(['main-menu']);
+                }
+              );
+          },
+          (itemError) => {
+            console.error('Error getting item:', itemError);
             this.router.navigate(['main-menu']);
-          }, 3000);
-        },
-        (loanError) => {
-          console.error('Error loaning item:', loanError);
-          this.router.navigate(['main-menu']);
-        }
-      );
+          }
+        );
+      },
+      (userError) => {
+        console.error('Error getting user:', userError);
+        this.router.navigate(['main-menu']);
+      }
+    );
   }
 
   // GET LOCATIONS FROM DATABASE

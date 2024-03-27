@@ -114,4 +114,17 @@ router.get("/check-admin/:rfidTag", async (req, res) => {
   }
 });
 
+router.get("/get-user/:rfidTag", async (req, res) => {
+  try {
+    const user = await User.findOne({ rfidTag: req.params.rfidTag });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;

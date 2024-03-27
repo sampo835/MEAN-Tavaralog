@@ -16,12 +16,16 @@ const itemSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    default: "stock",
+    default: "Varastossa",
   },
   rfidTag: {
     type: String,
     unique: true,
     required: true,
+  },
+  loanTime: {
+    type: Date,
+    default: null,
   },
 });
 

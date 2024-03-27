@@ -23,6 +23,10 @@ export class UserService {
     return this.http.get<any[]>(`${this.apiUrl}/get-users`);
   }
 
+  getUser(rfidTag: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/get-user/${rfidTag}`);
+  }
+
   checkUser(rfidTag: string): Observable<{ userExists: boolean }> {
     const url = `${this.apiUrl}/check-user/${rfidTag}`;
     return this.http.get<{ userExists: boolean }>(url);

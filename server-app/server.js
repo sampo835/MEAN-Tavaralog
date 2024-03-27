@@ -6,6 +6,7 @@ const config = require("./config/database");
 const itemsRoutes = require("./routes/items");
 const usersRoutes = require("./routes/users");
 const locationsRoutes = require("./routes/locations");
+const loansRoutes = require("./routes/loans");
 const app = express();
 
 // Connect To Database
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use("/items", itemsRoutes);
 app.use("/users", usersRoutes);
 app.use("/locations", locationsRoutes);
+app.use("/loans", loansRoutes);
 
 // Start the server
 const startServer = (port) => {

@@ -1,0 +1,30 @@
+<section class="container">
+  <div class="loans">
+    <div class="window-header">
+      <h3>LAINAUSHISTORIA</h3>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Työkalu</th>
+            <th>Käyttäjä</th>
+            <th>Käyttöalue</th>
+            <th>Lainausaika</th>
+            <th>Palautusaika</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let loan of loanHistory">
+            <td>{{ loan.itemName }}</td>
+            <td>{{ loan.userName }}</td>
+            <td>{{ loan.location }}</td>
+            <td>{{ loan.loanTime | date : "medium" }}</td>
+            <td>{{ loan.returnTime | date : "medium" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<button class="back-button" routerLink="/main-menu">TAKAISIN</button>

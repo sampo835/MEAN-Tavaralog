@@ -17,6 +17,7 @@ import { CheckAdminComponent } from './components/check-admin/check-admin.compon
 import { HeaderComponent } from './components/header/header.component';
 import { AddLocationComponent } from './components/add-location/add-location.component';
 import { StartupComponent } from './components/startup/startup/startup.component';
+import { LoanHistoryComponent } from './components/loan-history/loan-history/loan-history.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { StartupComponent } from './components/startup/startup/startup.component
     HeaderComponent,
     AddLocationComponent,
     StartupComponent,
+    LoanHistoryComponent,
   ],
   imports: [
     BrowserModule,

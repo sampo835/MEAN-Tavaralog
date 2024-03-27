@@ -10,6 +10,7 @@ import { AddItemComponent } from './components/add-item/add-item.component';
 import { CheckAdminComponent } from './components/check-admin/check-admin.component';
 import { AddLocationComponent } from './components/add-location/add-location.component';
 import { StartupComponent } from './components/startup/startup/startup.component';
+import { LoanHistoryComponent } from './components/loan-history/loan-history/loan-history.component';
 
 const routes: Routes = [
   { path: '', component: StartupComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'add-location', component: AddLocationComponent },
   { path: 'check-admin', component: CheckAdminComponent },
   { path: 'main-menu', component: MainMenuComponent },
+  { path: 'loan-history', component: LoanHistoryComponent },
 ];
 
 @NgModule({

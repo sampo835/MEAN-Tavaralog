@@ -3,9 +3,9 @@
   <div class="users">
     <div class="window-header">
       <h3>KÄYTTÄJÄT</h3>
-      <!--button class="add-button" routerLink="/add-user">
+      <button class="add-button" routerLink="/add-user">
         <p>Lisää uusi</p>
-      </button-->
+      </button>
     </div>
     <div class="table-container">
       <table>
@@ -14,7 +14,7 @@
             <th>Nimi</th>
             <th>Rooli</th>
             <th>Ryhmä</th>
-            <th><button routerLink="/add-user"></button></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +22,11 @@
             <td>{{ user.username }}</td>
             <td>{{ user.role }}</td>
             <td>{{ user.group }}</td>
-            <td><button (click)="deleteUser(user._id)">Poista</button></td>
+            <td>
+              <button class="remove-button" (click)="deleteUser(user._id)">
+                Poista
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -32,7 +36,10 @@
   <!-- Loans Section -->
   <div class="loans">
     <div class="window-header">
-      <h3>LAINAUSLISTA</h3>
+      <h3>AKTIIVISET LAINAUKSET</h3>
+      <button class="add-button" routerLink="/loan-history">
+        <p>Historia</p>
+      </button>
     </div>
     <div class="table-container">
       <table>
@@ -52,7 +59,7 @@
               <td>{{ item.loaner.username }}</td>
               <td>{{ item.loaner.group }}</td>
               <td>{{ item.location }}</td>
-              <td>{{ item.loantime }}</td>
+              <td>{{ item.loanTime | date : "medium" }}</td>
             </tr>
           </ng-container>
           <ng-template #noItemsPlaceholder>
@@ -84,7 +91,11 @@
         <tbody>
           <tr *ngFor="let item of items">
             <td>{{ item.itemname }}</td>
-            <td><button (click)="deleteItem(item._id)">Poista</button></td>
+            <td>
+              <button class="remove-button" (click)="deleteItem(item._id)">
+                Poista
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -111,7 +122,12 @@
           <tr *ngFor="let location of locations">
             <td>{{ location.name }}</td>
             <td>
-              <button (click)="deleteLocation(location._id)">Poista</button>
+              <button
+                class="remove-button"
+                (click)="deleteLocation(location._id)"
+              >
+                Poista
+              </button>
             </td>
           </tr>
         </tbody>

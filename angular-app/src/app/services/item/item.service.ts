@@ -22,6 +22,10 @@ export class ItemService {
     return this.http.get<any[]>(`${this.apiUrl}/get-items`);
   }
 
+  getItem(rfidTag: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/get-item/${rfidTag}`);
+  }
+
   checkItem(
     rfidTag: string
   ): Observable<{ itemExists: boolean; isLoaned: boolean }> {
@@ -36,8 +40,10 @@ export class ItemService {
   loanItem(
     itemRfidTag: string,
     userRfidTag: string,
-    location: string
+    location: string,
+    loanTime: Date
   ): Observable<any> {
+    console.log('Loan time:', { loanTime });
     const trimmedItemRfidTag = itemRfidTag.trim();
     const trimmedUserRfidTag = userRfidTag.trim();
 
@@ -45,6 +51,7 @@ export class ItemService {
       itemRfidTag: trimmedItemRfidTag,
       userRfidTag: trimmedUserRfidTag,
       location: location,
+      loanTime: loanTime,
     };
 
     return this.http.put(`${this.apiUrl}/loan-item`, body);
